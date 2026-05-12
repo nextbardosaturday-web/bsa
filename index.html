@@ -25,7 +25,7 @@ main{padding:20px;max-width:1520px;margin:auto}
 .kpi .label{font-size:12px;color:var(--muted)}.kpi .value{font-size:24px;font-weight:750;margin-top:4px}
 .sprayCard{grid-column:span 6}.zoneCard{grid-column:span 6}.wide{grid-column:span 12}.half{grid-column:span 6}
 canvas{width:100%;background:#0c0f15;border-radius:12px;border:1px solid #2e3444}
-#spray{aspect-ratio:1.15/1}#zoneMap{aspect-ratio:1/1; min-height:560px}#evla,#contact{aspect-ratio:1.55/1}
+#spray{aspect-ratio:1.18/1}#sprayDistribution{aspect-ratio:3.25/1}#zoneMap{aspect-ratio:1/1; min-height:560px}#evla,#contact{aspect-ratio:1.55/1}
 .tabButtons{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}.tabButtons button.active{background:#3b82f6;border-color:#60a5fa}.chartPanel{display:block}
 .chartTitle{margin:0 0 6px;font-size:14px;color:#cbd5e1}
 .legend{display:flex;gap:12px;flex-wrap:wrap;margin-top:10px;color:var(--muted);font-size:12px;line-height:1.5}
@@ -42,14 +42,14 @@ tr.result-strike td{background:rgba(250,204,21,0.12)}
 tr.result-foul td{background:rgba(251,146,60,0.12)}
 tr.result-ball td{background:rgba(34,197,94,0.12)}
 tr.result-inplay td{background:rgba(96,165,250,0.12)}
-tr.result-hardhit td{background:rgba(168,85,247,0.18)}
-tr.result-barrel td{background:rgba(147,51,234,0.16)}
+tr.result-hardhit td{background:rgba(96,165,250,0.12)}
+tr.result-barrel td{background:rgba(96,165,250,0.12)}
 
 .barrelBadge{
   display:inline-block;
   padding:3px 10px;
   border-radius:999px;
-  background:#9333ea;
+  background:#ef4444;
   color:white;
   font-weight:700;
   font-size:12px;
@@ -59,8 +59,8 @@ tr.result-barrel td{background:rgba(147,51,234,0.16)}
   display:inline-block;
   padding:3px 10px;
   border-radius:999px;
-  background:#7c3aed55;
-  color:#ddd6fe;
+  background:#fb923c;
+  color:#111827;
   font-weight:700;
   font-size:12px;
 }
@@ -100,7 +100,9 @@ tr.result-barrel td{background:rgba(147,51,234,0.16)}
 
     <div class="card sprayCard">
       <h2>Spray Chart / 打球地点</h2>
-      <canvas id="spray" width="850" height="740"></canvas>
+      <canvas id="spray" width="850" height="720"></canvas>
+      <div class="chartTitle" style="margin-top:14px">Spray Distribution / 打球方向分布</div>
+      <canvas id="sprayDistribution" width="850" height="260"></canvas>
       <div class="legend">
         <span><i class="dot" style="background:#ef4444"></i>Barrel</span>
         <span><i class="dot" style="background:#fb923c"></i>Hard Hit</span>
@@ -123,7 +125,7 @@ tr.result-barrel td{background:rgba(147,51,234,0.16)}
         <span>row: 0〜4 / column: 2〜6</span>
         <span>3×3（r1〜3, c3〜5）をストライクゾーンとして太枠表示</span>
       </div>
-      <div class="note">タブで全球ベースと結果ベースを切替。表が縦に伸びないよう1枚のZone Mapで表示します。</div>
+      <div class="note">タブで全球ベースと結果ベースを切替。未投球セルはグレー、背景色はダークモード向けの低彩度にしています。</div>
     </div>
 
     <div class="card half">
@@ -153,14 +155,19 @@ tr.result-barrel td{background:rgba(147,51,234,0.16)}
     </div>
 
     <div class="card wide">
+      <h2>Ball Type Stats / 球種別成績</h2>
+      <div style="overflow:auto"><table id="ballTypeTable"></table></div>
+    </div>
+
+    <div class="card wide">
       <h2>Pitch Details</h2>
       <div class="legend">
         <span><i class="dot" style="background:#22c55e"></i>BALL</span>
         <span><i class="dot" style="background:#facc15"></i>STRIKE</span>
         <span><i class="dot" style="background:#fb923c"></i>FOUL</span>
         <span><i class="dot" style="background:#60a5fa"></i>IN_PLAY</span>
-        <span><i class="dot" style="background:#a855f7"></i>Hard Hit</span>
-        <span><i class="dot" style="background:#9333ea"></i>Barrel</span>
+        <span><i class="dot" style="background:#fb923c"></i>Hard Hit</span>
+        <span><i class="dot" style="background:#ef4444"></i>Barrel</span>
       </div>
       <div style="overflow:auto"><table id="pitchTable"></table></div>
     </div>
@@ -388,7 +395,7 @@ function render(data){
   document.getElementById("error").style.display="none";
   document.getElementById("content").style.display="grid";
   document.getElementById("csvBtn").disabled=false;
-  renderKPIs(data); drawSpray(data); updateZoneTabs(); drawZoneMap(data); drawEVLA(data); updateContactTabs(); drawContactOrTiming(data); renderAnalysis(data); renderTable(data);
+  renderKPIs(data); drawSpray(data); drawSprayDistribution(data); updateZoneTabs(); drawZoneMap(data); drawEVLA(data); updateContactTabs(); drawContactOrTiming(data); renderAnalysis(data); renderBallTypeStats(data); renderTable(data);
 }
 function showError(msg){const el=document.getElementById("error");el.style.display="block";el.textContent=msg;}
 function batted(data){return data.pitches.filter(p=>p.battedBall)}
@@ -465,6 +472,16 @@ function renderKPIs(data){
   document.getElementById("kpis").innerHTML=items.map(([l,v])=>`<div class="kpi"><div class="label">${esc(l)}</div><div class="value">${esc(v)}</div></div>`).join("");
 }
 
+function battedColor(p){
+  const bb=p?.battedBall;
+  if(!bb) return "#60a5fa";
+  if(isBarrel(bb)) return "#ef4444";     // Barrel = red
+  if(isHardHit(bb)) return "#fb923c";    // Hard Hit = orange
+  const q=bb.contact?.quality||"";
+  if(q==="SOLID") return "#facc15";      // SOLID = yellow
+  return "#22c55e";                      // SWEET/その他 = green
+}
+
 function drawSpray(data){
   const c=document.getElementById("spray"), ctx=c.getContext("2d");
   ctx.clearRect(0,0,c.width,c.height);
@@ -507,11 +524,7 @@ function drawSpray(data){
   for(const p of batted(data)){
     const bb=p.battedBall, angle=Number(bb.sprayAngleDeg)||0, dist=Math.min(Math.max(Number(bb.distance)||0,0),maxDist);
     const [x,y]=pt(angle,dist);
-    const q=bb.contact?.quality||"";
-    let color="#22c55e";
-    if(q==="SOLID")color="#facc15";
-    if(isHardHit(bb)) color="#fb923c";
-    if(isBarrel(bb)) color="#ef4444";
+    let color=battedColor(p);
     ctx.fillStyle=color;ctx.strokeStyle="#05070a";ctx.lineWidth=2;
     ctx.beginPath();ctx.arc(x,y,8,0,Math.PI*2);ctx.fill();ctx.stroke();
     ctx.fillStyle="#0b0d12";ctx.font="bold 11px sans-serif";ctx.textAlign="center";ctx.textBaseline="middle";
@@ -521,6 +534,104 @@ function drawSpray(data){
 }
 
 const zoneRows=[0,1,2,3,4], zoneCols=[2,3,4,5,6];
+function drawSprayDistribution(data){
+  const c=document.getElementById("sprayDistribution");
+  if(!c) return;
+  const ctx=c.getContext("2d");
+  ctx.clearRect(0,0,c.width,c.height);
+  ctx.fillStyle="#0c0f15";ctx.fillRect(0,0,c.width,c.height);
+
+  const bs=batted(data);
+
+  // Spray Chart と同じ角度範囲を5分割。
+  // 負角=左、正角=右。
+  const bins=[
+    {name:"左大", min:-45, max:-27},
+    {name:"左中", min:-27, max:-9},
+    {name:"中",   min:-9,  max:9},
+    {name:"右中", min:9,   max:27},
+    {name:"右大", min:27,  max:45}
+  ];
+
+  const total=Math.max(1,bs.length);
+
+  const stats=bins.map(b=>{
+    const pitches=bs.filter(p=>{
+      const a=Number(p.battedBall.sprayAngleDeg)||0;
+      return a>=b.min && (b.max===45 ? a<=b.max : a<b.max);
+    });
+    return {
+      count:pitches.length,
+      hr:pitches.filter(p=>(Number(p.battedBall.distance)||0)>=120).length
+    };
+  });
+
+  const cx=c.width/2, cy=c.height-18;
+  const outer=Math.min(c.width*0.34,c.height*0.82);
+  const inner=4;
+
+  function polar(angleDeg, radius){
+    const rad=(angleDeg-90)*Math.PI/180;
+    return [cx+Math.cos(rad)*radius, cy+Math.sin(rad)*radius];
+  }
+
+  for(let i=0;i<bins.length;i++){
+    const b=bins[i];
+    const count=stats[i].count;
+    const hr=stats[i].hr;
+    const pct=count/total;
+
+    let color="rgba(71,85,105,.38)";
+    if(pct>=0.25) color="rgba(216,180,254,.50)";
+    else if(pct<0.15) color="rgba(125,211,252,.30)";
+
+    ctx.beginPath();
+    const [x0,y0]=polar(b.min, inner);
+    ctx.moveTo(x0,y0);
+    for(let a=b.min;a<=b.max;a++){
+      const [x,y]=polar(a,outer);
+      ctx.lineTo(x,y);
+    }
+    const [x1,y1]=polar(b.max, inner);
+    ctx.lineTo(x1,y1);
+    ctx.closePath();
+    ctx.fillStyle=color;
+    ctx.fill();
+    ctx.strokeStyle="rgba(226,232,240,.70)";
+    ctx.lineWidth=2;
+    ctx.stroke();
+
+    const mid=(b.min+b.max)/2;
+
+    // 外側: 方向名
+    const [lx,ly]=polar(mid, outer+18);
+    ctx.fillStyle="#e5e7eb";
+    ctx.font="bold 13px sans-serif";
+    ctx.textAlign="center";
+    ctx.fillText(b.name,lx,ly);
+
+    // 内側: 割合 / 本数 / 120m超え本数
+    const [px,py]=polar(mid, outer*0.58);
+    ctx.fillStyle="#fff";
+    ctx.font="bold 12px sans-serif";
+    ctx.fillText(`${(pct*100).toFixed(1)}%`,px,py-14);
+
+    ctx.fillStyle="#e2e8f0";
+    ctx.font="12px sans-serif";
+    ctx.fillText(`${count}本`,px,py+3);
+
+    ctx.fillStyle=hr>0 ? "#fbbf24" : "#94a3b8";
+    ctx.font="bold 12px sans-serif";
+    ctx.fillText(`HR ${hr}`,px,py+20);
+  }
+
+  // 120mラインの意味を明示
+  ctx.fillStyle="#cbd5e1";
+  ctx.font="12px sans-serif";
+  ctx.textAlign="left";
+  ctx.fillText("各方向: 割合 / 本数 / HR=120mライン超え本数", 16, c.height-14);
+}
+
 function emptyZoneCells(){
   return Array.from({length:5},()=>Array.from({length:5},()=>({p:0,ip:0,strike:0,barrel:0,hard:0,ev:0,evn:0,outcomes:{}})));
 }
@@ -544,42 +655,98 @@ function collectCells(data){
   }
   return cells;
 }
+function zoneBgColor(ratio, cell, mode){
+  if(cell.p===0) return "#202634";
+
+  // ダークモード用: 彩度を抑えた青紫系。強い緑/橙は使わない。
+  if(mode==="all"){
+    const light = 22 + ratio * 18;
+    return `hsl(224, 42%, ${light}%)`;
+  }
+
+  if(cell.barrel>0) return "rgba(239,68,68,.30)";
+  if(cell.hard>0) return "rgba(251,146,60,.24)";
+  if(cell.ip>0) return "rgba(37,99,235,.34)";
+  if(cell.strike>0) return "rgba(202,138,4,.24)";
+  return "#202634";
+}
+
+function zoneTextColor(cell){
+  return cell.p===0 ? "#94a3b8" : "#f8fafc";
+}
+
 function drawZoneGrid(canvasId, cells, mode){
   const c=document.getElementById(canvasId),ctx=c.getContext("2d");
-  ctx.clearRect(0,0,c.width,c.height);ctx.fillStyle="#0c0f15";ctx.fillRect(0,0,c.width,c.height);
-  const pad=28,gap=7,n=5,size=(c.width-pad*2-gap*(n-1))/n;
+  ctx.clearRect(0,0,c.width,c.height);
+  ctx.fillStyle="#0c0f15";ctx.fillRect(0,0,c.width,c.height);
+
+  const pad=34,gap=8,n=5,size=(c.width-pad*2-gap*(n-1))/n;
   const max=Math.max(1,...cells.flat().map(x=> mode==="all" ? x.p : (x.barrel*4+x.hard*2+x.ip+x.strike*.35)));
+
   for(let r=0;r<5;r++){
     for(let col=0;col<5;col++){
       const cell=cells[r][col];
       const score=mode==="all" ? cell.p : (cell.barrel*4+cell.hard*2+cell.ip+cell.strike*.35);
       const ratio=score/max;
-      const hue=245-ratio*215, light=25+ratio*31;
-      ctx.fillStyle=`hsl(${hue},60%,${light}%)`;
       const x=pad+col*(size+gap),y=pad+r*(size+gap);
+
+      ctx.fillStyle=zoneBgColor(ratio, cell, mode);
       ctx.fillRect(x,y,size,size);
 
-      // 3x3 strike zone: r1-3, c3-5
       const zr=zoneRows[r], zc=zoneCols[col];
       const inStrikeZone = zr>=1 && zr<=3 && zc>=3 && zc<=5;
-      ctx.strokeStyle=inStrikeZone ? "#ffffff" : "#7f8aa3";
+      ctx.strokeStyle=inStrikeZone ? "rgba(248,250,252,.95)" : "rgba(148,163,184,.65)";
       ctx.lineWidth=inStrikeZone ? 3.2 : 1.5;
       ctx.strokeRect(x,y,size,size);
 
-      ctx.fillStyle="#fff";ctx.textAlign="center";ctx.font="bold 22px sans-serif";
+      ctx.textAlign="center";
+      ctx.fillStyle=zoneTextColor(cell);
+      ctx.shadowColor="rgba(0,0,0,.55)";
+      ctx.shadowBlur=3;
+
       if(mode==="all"){
-        ctx.fillText(String(cell.p),x+size/2,y+size/2-24);
-        ctx.fillStyle="#93c5fd";ctx.font="12px sans-serif";ctx.fillText(`STR ${cell.strike}`,x+size/2,y+size/2-2);
-        ctx.fillStyle="#d1d5db";ctx.font="12px sans-serif";ctx.fillText(`IP ${cell.ip}`,x+size/2,y+size/2+18);
+        ctx.font="bold 28px sans-serif";
+        ctx.fillText(String(cell.p),x+size/2,y+size/2-14);
+
+        ctx.fillStyle=cell.p===0 ? "#64748b" : "#bfdbfe";
+        ctx.font="13px sans-serif";
+        ctx.fillText(`STR ${cell.strike}`,x+size/2,y+size/2+12);
+
+        ctx.fillStyle=cell.p===0 ? "#64748b" : "#cbd5e1";
+        ctx.font="13px sans-serif";
+        ctx.fillText(`IP ${cell.ip}`,x+size/2,y+size/2+32);
       }else{
-        ctx.fillText(`${cell.ip}/${cell.p}`,x+size/2,y+size/2-28);
-        ctx.fillStyle="#93c5fd";ctx.font="12px sans-serif";ctx.fillText(`STR ${cell.strike}`,x+size/2,y+size/2-8);
-        ctx.fillStyle="#fecaca";ctx.font="bold 12px sans-serif";ctx.fillText(`BRL ${cell.barrel}`,x+size/2,y+size/2+12);
-        ctx.fillStyle="#fed7aa";ctx.font="12px sans-serif";ctx.fillText(`HH ${cell.hard}`,x+size/2,y+size/2+30);
+        ctx.font="bold 24px sans-serif";
+        ctx.fillText(`${cell.ip}/${cell.p}`,x+size/2,y+size/2-24);
+
+        ctx.fillStyle=cell.barrel>0 ? "#fecaca" : "#a78bfa";
+        ctx.font="bold 14px sans-serif";
+        ctx.fillText(`BRL ${cell.barrel}`,x+size/2,y+size/2+2);
+
+        ctx.fillStyle=cell.hard>0 ? "#fed7aa" : "#94a3b8";
+        ctx.font="13px sans-serif";
+        ctx.fillText(`HH ${cell.hard}`,x+size/2,y+size/2+23);
+
+        ctx.fillStyle=cell.strike>0 ? "#fde68a" : "#64748b";
+        ctx.font="12px sans-serif";
+        ctx.fillText(`STR ${cell.strike}`,x+size/2,y+size/2+42);
       }
-      ctx.fillStyle="#aab4c6";ctx.font="11px sans-serif";
+
+      ctx.shadowBlur=0;
+      ctx.fillStyle="#94a3b8";
+      ctx.font="11px sans-serif";
       ctx.fillText(`r${zr} c${zc}`,x+size/2,y+size-10);
     }
+  }
+
+  ctx.textAlign="left";
+  ctx.fillStyle="#cbd5e1";
+  ctx.font="12px sans-serif";
+  const legendY=c.height-10;
+  if(mode==="all"){
+    ctx.fillText("背景: 投球数が多いほど青が明るい / 0球はグレー", 18, legendY);
+  }else{
+    ctx.fillText("背景: IN_PLAY=青 / HardHit=橙 / Barrel=赤 / 0球=グレー", 18, legendY);
   }
 }
 
@@ -631,15 +798,15 @@ function drawEVLA(data){
   }
   for(const [x,y] of ptsLow){ if(!started){ctx.moveTo(x,y);started=true}else ctx.lineTo(x,y); }
   for(const [x,y] of ptsHigh.reverse()) ctx.lineTo(x,y);
-  ctx.closePath();ctx.fillStyle="rgba(239,68,68,.18)";ctx.fill();ctx.strokeStyle="#ef4444";ctx.lineWidth=2;ctx.stroke();
-  ctx.fillStyle="#ef4444";ctx.font="12px sans-serif";ctx.textAlign="left";ctx.fillText("Barrel Zone",s.mapX(190),s.mapY(48));
+  ctx.closePath();ctx.fillStyle="rgba(239,68,68,.14)";ctx.fill();ctx.strokeStyle="#ef4444";ctx.lineWidth=2;ctx.stroke();
+  ctx.fillStyle="#fecaca";ctx.font="12px sans-serif";ctx.textAlign="left";ctx.fillText("Barrel Zone",s.mapX(190),s.mapY(48));
 
   ctx.fillStyle="#9aa7bb";ctx.textAlign="left";ctx.fillText("ゴロ",s.p.l+6,s.mapY(-20));ctx.fillText("ライナー",s.p.l+6,s.mapY(15));ctx.fillText("フライ",s.p.l+6,s.mapY(40));
   for(const p of batted(data)){
     const bb=p.battedBall, ev=Number(bb.exitSpeedKmh), la=Number(bb.launchAngleDeg);
     if(!Number.isFinite(ev)||!Number.isFinite(la))continue;
     const x=s.mapX(Math.min(Math.max(ev,140),260)), y=s.mapY(Math.min(Math.max(la,-45),55));
-    ctx.fillStyle=isBarrel(bb)?"#ef4444":isHardHit(bb)?"#fb923c":"#60a5fa";
+    ctx.fillStyle=battedColor(p);
     ctx.beginPath();ctx.arc(x,y,6.5,0,Math.PI*2);ctx.fill();
     ctx.fillStyle="#fff";ctx.font="11px sans-serif";ctx.textAlign="left";ctx.fillText("#"+p.pitchNo,x+9,y+4);
   }
@@ -681,8 +848,7 @@ function drawContact(data){
     const ct=p.battedBall.contact;if(!ct)continue;
     const x=s.mapX(Math.min(Math.max(Number(ct.offsetRight)||0,-0.4),0.4));
     const y=s.mapY(Math.min(Math.max(Number(ct.offsetUp)||0,-0.35),0.6));
-    const nd=Number(ct.normalizedDistance);
-    ctx.fillStyle=nd<=0.18?"#22c55e":nd<=0.32?"#facc15":"#ef4444";
+    ctx.fillStyle=battedColor(p);
     ctx.beginPath();ctx.arc(x,y,6.5,0,Math.PI*2);ctx.fill();
     ctx.fillStyle="#fff";ctx.font="11px sans-serif";ctx.textAlign="left";ctx.fillText("#"+p.pitchNo,x+9,y+4);
   }
@@ -700,8 +866,7 @@ function drawTiming(data){
     const ct=p.battedBall.contact;if(!ct)continue;
     const x=s.mapX(Math.min(Math.max(Number(ct.offsetForward)||0,-0.35),0.35));
     const y=s.mapY(Math.min(Math.max(Number(ct.normalizedDistance)||0,0),0.7));
-    const nd=Number(ct.normalizedDistance);
-    ctx.fillStyle=nd<=0.18?"#22c55e":nd<=0.32?"#facc15":"#ef4444";
+    ctx.fillStyle=battedColor(p);
     ctx.beginPath();ctx.arc(x,y,6.5,0,Math.PI*2);ctx.fill();
     ctx.fillStyle="#fff";ctx.font="11px sans-serif";ctx.textAlign="left";ctx.fillText("#"+p.pitchNo,x+9,y+4);
   }
@@ -721,6 +886,100 @@ function renderAnalysis(data){
   <p><span class="badge">Zone Tendencies</span><br>全球ベースは投球分布、結果ベースは IN_PLAY・Hard Hit・Barrel を見やすくした分布です。</p>`;
 }
 
+
+function renderBallTypeStats(data){
+  const groups = new Map();
+
+  for(const p of data.pitches){
+    const key = p.ballName || p.ballType || "Unknown";
+    if(!groups.has(key)){
+      groups.set(key,{
+        name:key,
+        pitches:0,
+        swings:0,
+        whiffs:0,
+        balls:0,
+        strikes:0,
+        fouls:0,
+        inplay:0,
+        batted:0,
+        evSum:0,
+        evN:0,
+        distSum:0,
+        distN:0,
+        barrel:0,
+        hard:0
+      });
+    }
+
+    const g=groups.get(key);
+    g.pitches++;
+
+    if(p.outcome==="BALL") g.balls++;
+    if(p.outcome==="STRIKE") g.strikes++;
+    if(p.outcome==="FOUL") g.fouls++;
+    if(p.outcome==="IN_PLAY") g.inplay++;
+
+    if(isSwing(p)) g.swings++;
+    if(isWhiff(p)) g.whiffs++;
+
+    if(p.battedBall){
+      g.batted++;
+      const ev=Number(p.battedBall.exitSpeedKmh);
+      const dist=Number(p.battedBall.distance);
+      if(Number.isFinite(ev)){g.evSum+=ev;g.evN++;}
+      if(Number.isFinite(dist)){g.distSum+=dist;g.distN++;}
+      if(isBarrel(p.battedBall)) g.barrel++;
+      if(isHardHit(p.battedBall)) g.hard++;
+    }
+  }
+
+  const rows=[...groups.values()]
+    .sort((a,b)=>b.pitches-a.pitches)
+    .map(g=>{
+      const swingRate = g.pitches ? (g.swings/g.pitches*100).toFixed(1)+"%" : "-";
+      const whiffRate = g.swings ? (g.whiffs/g.swings*100).toFixed(1)+"%" : "-";
+      const inplayRate = g.pitches ? (g.inplay/g.pitches*100).toFixed(1)+"%" : "-";
+      const barrelRate = g.batted ? (g.barrel/g.batted*100).toFixed(1)+"%" : "-";
+      const avgEv = g.evN ? fmt(g.evSum/g.evN) : "-";
+      const avgDist = g.distN ? fmt(g.distSum/g.distN) : "-";
+
+      return `<tr>
+        <td>${esc(g.name)}</td>
+        <td>${g.pitches}</td>
+        <td>${g.balls}</td>
+        <td>${g.strikes}</td>
+        <td>${g.fouls}</td>
+        <td>${g.inplay}</td>
+        <td>${swingRate}</td>
+        <td>${whiffRate}</td>
+        <td>${inplayRate}</td>
+        <td>${avgEv}</td>
+        <td>${avgDist}</td>
+        <td>${g.hard}</td>
+        <td>${g.barrel}</td>
+        <td>${barrelRate}</td>
+      </tr>`;
+    }).join("");
+
+  document.getElementById("ballTypeTable").innerHTML = `<thead><tr>
+    <th>球種</th>
+    <th>投球</th>
+    <th>BALL</th>
+    <th>STRIKE</th>
+    <th>FOUL</th>
+    <th>IN_PLAY</th>
+    <th>Swing%</th>
+    <th>Whiff%</th>
+    <th>InPlay%</th>
+    <th>Avg EV</th>
+    <th>Avg Dist</th>
+    <th>HH</th>
+    <th>Barrel</th>
+    <th>Barrel%</th>
+  </tr></thead><tbody>${rows || `<tr><td colspan="14">データなし</td></tr>`}</tbody>`;
+}
+
 function renderTable(data){
   let pa=1;
   let rows=`<thead><tr>
@@ -732,9 +991,7 @@ function renderTable(data){
   for(const p of data.pitches){
     const bb=p.battedBall,ct=bb?.contact;
     let rowClass="";
-    if(bb && isBarrel(bb)) rowClass="result-barrel";
-    else if(bb && isHardHit(bb)) rowClass="result-hardhit";
-    else if(p.outcome==="IN_PLAY") rowClass="result-inplay";
+    if(p.outcome==="IN_PLAY") rowClass="result-inplay";
     else if(p.outcome==="BALL") rowClass="result-ball";
     else if(p.outcome==="FOUL") rowClass="result-foul";
     else if(p.outcome==="STRIKE") rowClass="result-strike";
