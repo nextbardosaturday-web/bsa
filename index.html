@@ -1,0 +1,785 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Batting Session Analyzer - Zone/Barrel</title>
+<style>
+:root{
+  --bg:#0b0d12;--panel:#171b24;--panel2:#202838;--line:#3d465a;--text:#e8eef8;--muted:#9aa7bb;
+  --green:#22c55e;--yellow:#facc15;--red:#ef4444;--blue:#60a5fa;--orange:#fb923c;
+}
+*{box-sizing:border-box}
+body{margin:0;background:linear-gradient(180deg,#090b10,#121722);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+header{padding:20px 26px;border-bottom:1px solid var(--line);background:#10141d;position:sticky;top:0;z-index:5}
+h1{font-size:23px;margin:0 0 6px}.sub{color:var(--muted);font-size:13px;line-height:1.5}
+main{padding:20px;max-width:1520px;margin:auto}
+.drop{border:2px dashed var(--line);background:#141a25;border-radius:16px;padding:18px;text-align:center;margin-bottom:16px}
+.drop input{margin-top:10px}
+.err{display:none;background:#3b1111;color:#fecaca;border:1px solid #7f1d1d;padding:12px;border-radius:10px;margin:12px 0;white-space:pre-wrap}
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
+.card{background:rgba(23,27,36,.96);border:1px solid var(--line);border-radius:16px;padding:16px;box-shadow:0 10px 28px rgba(0,0,0,.18)}
+.card h2{font-size:17px;margin:0 0 10px}
+.kpis{grid-column:span 12;display:grid;grid-template-columns:repeat(7,1fr);gap:12px}
+.kpi{background:var(--panel2);border:1px solid var(--line);border-radius:14px;padding:12px}
+.kpi .label{font-size:12px;color:var(--muted)}.kpi .value{font-size:24px;font-weight:750;margin-top:4px}
+.sprayCard{grid-column:span 6}.zoneCard{grid-column:span 6}.wide{grid-column:span 12}.half{grid-column:span 6}
+canvas{width:100%;background:#0c0f15;border-radius:12px;border:1px solid #2e3444}
+#spray{aspect-ratio:1.15/1}#zoneMap{aspect-ratio:1/1; min-height:560px}#evla,#contact{aspect-ratio:1.55/1}
+.tabButtons{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}.tabButtons button.active{background:#3b82f6;border-color:#60a5fa}.chartPanel{display:block}
+.chartTitle{margin:0 0 6px;font-size:14px;color:#cbd5e1}
+.legend{display:flex;gap:12px;flex-wrap:wrap;margin-top:10px;color:var(--muted);font-size:12px;line-height:1.5}
+.dot{width:11px;height:11px;display:inline-block;border-radius:999px;margin-right:5px;vertical-align:-1px}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:10px}
+button{background:#243044;color:#e8eef8;border:1px solid var(--line);border-radius:10px;padding:8px 12px;cursor:pointer}
+button:hover{background:#2c3a52}
+button.sessionActive{background:#2563eb;border-color:#60a5fa}
+.sessionChip{font-size:12px;line-height:1.35;text-align:left}
+table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:8px;border-bottom:1px solid var(--line);text-align:right}
+th:first-child,td:first-child{text-align:left}th{color:var(--muted);font-weight:600}tbody tr:hover{background:#1b2230}
+
+tr.result-strike td{background:rgba(250,204,21,0.12)}
+tr.result-foul td{background:rgba(251,146,60,0.12)}
+tr.result-ball td{background:rgba(34,197,94,0.12)}
+tr.result-inplay td{background:rgba(96,165,250,0.12)}
+tr.result-hardhit td{background:rgba(168,85,247,0.18)}
+tr.result-barrel td{background:rgba(147,51,234,0.16)}
+
+.barrelBadge{
+  display:inline-block;
+  padding:3px 10px;
+  border-radius:999px;
+  background:#9333ea;
+  color:white;
+  font-weight:700;
+  font-size:12px;
+  letter-spacing:.5px;
+}
+.hardHitBadge{
+  display:inline-block;
+  padding:3px 10px;
+  border-radius:999px;
+  background:#7c3aed55;
+  color:#ddd6fe;
+  font-weight:700;
+  font-size:12px;
+}
+
+
+.analysis{line-height:1.75;color:#dbe6f6}.badge{display:inline-block;border:1px solid #3d465a;background:#202838;border-radius:999px;padding:2px 8px;font-size:12px}
+.note{background:#101827;border:1px solid #2b3548;border-radius:12px;padding:10px;color:#cbd5e1;font-size:13px;line-height:1.6;margin-top:8px}
+@media(max-width:1100px){.sprayCard,.zoneCard,.half{grid-column:span 12}.kpis{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<header>
+  <h1>Batting Session Analyzer</h1>
+  <div class="sub">Minecraft野球プラグインの打席情報を読み込み、ゾーン・打球地点・バレルを可視化します。</div>
+</header>
+
+<main>
+  <section class="drop">
+    <strong>打席情報ファイルを選択</strong>
+    <div class="sub">
+      対応: .md 内の ```json ブロック / .json / .txt<br>パラメータなし: 手動ファイル読み込み / パラメータあり: 自動読み込み<br>例: ?url=https://example.com/session.json / ?data=Base64URL(JSON)<br>
+      複数ファイル選択可能（Windows: Ctrl / Shift、Mac: Command / Shift）<br>
+      ALL MERGED で統合分析できます
+    </div>
+    <input id="fileInput" type="file" multiple accept=".md,.json,.txt,application/json,text/markdown,text/plain">
+    <div class="toolbar">
+      <button id="csvBtn" type="button" disabled>CSV出力</button>
+    </div>
+    <div id="sessionSelector" class="toolbar" style="display:none;justify-content:flex-start;margin-top:14px"></div>
+  </section>
+
+  <div id="paramStatus" class="note" style="display:none"></div>
+  <div id="error" class="err"></div>
+
+  <section id="content" class="grid" style="display:none">
+    <div id="kpis" class="kpis"></div>
+
+    <div class="card sprayCard">
+      <h2>Spray Chart / 打球地点</h2>
+      <canvas id="spray" width="850" height="740"></canvas>
+      <div class="legend">
+        <span><i class="dot" style="background:#ef4444"></i>Barrel</span>
+        <span><i class="dot" style="background:#fb923c"></i>Hard Hit</span>
+        <span><i class="dot" style="background:#22c55e"></i>SWEET</span>
+        <span><i class="dot" style="background:#facc15"></i>SOLID</span>
+        <span>黒数字 = pitchNo</span>
+      </div>
+      <div class="note">内野ダイヤモンドは塁間 27.431m（90ft）。白い太線は 120m ライン。</div>
+    </div>
+
+    <div class="card zoneCard">
+      <h2>Zone Map / ゾーン別</h2>
+      <div class="tabButtons">
+        <button id="zoneTabAll" type="button" class="active">全球ベース</button>
+        <button id="zoneTabResult" type="button">結果ベース</button>
+      </div>
+      <div class="chartTitle" id="zoneTitle">全球ベース：投球数</div>
+      <canvas id="zoneMap" width="720" height="720"></canvas>
+      <div class="legend">
+        <span>row: 0〜4 / column: 2〜6</span>
+        <span>3×3（r1〜3, c3〜5）をストライクゾーンとして太枠表示</span>
+      </div>
+      <div class="note">タブで全球ベースと結果ベースを切替。表が縦に伸びないよう1枚のZone Mapで表示します。</div>
+    </div>
+
+    <div class="card half">
+      <h2>Launch Chart / Barrel判定</h2>
+      <canvas id="evla" width="760" height="490"></canvas>
+      <div class="note">
+        横軸=打球速度、縦軸=打球角度。赤い範囲がMLB Statcast風のBarrel目安。km/hをmphに変換して判定します。
+      </div>
+    </div>
+
+    <div class="card half">
+      <h2>Contact / Timing Map</h2>
+      <div class="tabButtons">
+        <button id="contactTab" type="button" class="active">芯とのズレ</button>
+        <button id="timingTab" type="button">タイミング</button>
+      </div>
+      <div class="chartTitle" id="contactTitle">Contact Map：offsetRight × offsetUp</div>
+      <canvas id="contact" width="760" height="490"></canvas>
+      <div class="note" id="contactNote">
+        Contact Map は battedBall.contact の値を表示。横=offsetRight、縦=offsetUp。中心ほど芯に近い。
+      </div>
+    </div>
+
+    <div class="card wide">
+      <h2>解析</h2>
+      <div id="analysis" class="analysis"></div>
+    </div>
+
+    <div class="card wide">
+      <h2>Pitch Details</h2>
+      <div class="legend">
+        <span><i class="dot" style="background:#22c55e"></i>BALL</span>
+        <span><i class="dot" style="background:#facc15"></i>STRIKE</span>
+        <span><i class="dot" style="background:#fb923c"></i>FOUL</span>
+        <span><i class="dot" style="background:#60a5fa"></i>IN_PLAY</span>
+        <span><i class="dot" style="background:#a855f7"></i>Hard Hit</span>
+        <span><i class="dot" style="background:#9333ea"></i>Barrel</span>
+      </div>
+      <div style="overflow:auto"><table id="pitchTable"></table></div>
+    </div>
+  </section>
+</main>
+
+<script>
+let currentData=null;
+let sessions=[];
+let currentSessionIndex=-1;
+let currentZoneMode="all";
+let currentContactMode="contact";
+
+
+document.getElementById("fileInput").addEventListener("change",async e=>{
+  const files=[...e.target.files];
+  if(!files.length)return;
+
+  try{
+    sessions=[];
+    for(const file of files){
+      const text=await file.text();
+      const data=parseInput(text);
+      sessions.push({name:file.name,data});
+    }
+
+    buildSessionSelector();
+
+    if(sessions.length===1){
+      currentSessionIndex=0;
+      render(sessions[0].data);
+    }else{
+      currentSessionIndex=-1;
+      render(makeMergedData());
+    }
+  }catch(err){
+    showError("読み込みに失敗しました。\n"+(err?.message||String(err)));
+    console.error(err);
+  }
+});
+document.getElementById("csvBtn").addEventListener("click",downloadCSV);
+
+document.addEventListener("DOMContentLoaded", autoLoadFromParams);
+
+async function autoLoadFromParams(){
+  const params = new URLSearchParams(location.search);
+  const url = params.get("url");
+  const dataParam = params.get("data");
+  const textParam = params.get("text");
+
+  try{
+    if(url){
+      showParamStatus("URLパラメータから読み込み中...");
+      const res = await fetch(url);
+      if(!res.ok) throw new Error("URL読み込み失敗: HTTP " + res.status);
+      const text = await res.text();
+      const data = parseInput(text);
+      render(data);
+      showParamStatus("URLパラメータから読み込み完了");
+      return;
+    }
+
+    if(dataParam){
+      showParamStatus("dataパラメータから読み込み中...");
+      const jsonText = decodeBase64Url(dataParam);
+      const data = parseInput(jsonText);
+      render(data);
+      showParamStatus("dataパラメータから読み込み完了");
+      return;
+    }
+
+    if(textParam){
+      showParamStatus("textパラメータから読み込み中...");
+      const data = parseInput(decodeURIComponent(textParam));
+      render(data);
+      showParamStatus("textパラメータから読み込み完了");
+      return;
+    }
+  }catch(err){
+    showError("パラメータ読み込みに失敗しました。\n" + (err?.message || String(err)));
+    console.error(err);
+  }
+}
+
+function decodeBase64Url(s){
+  s = s.replace(/-/g, "+").replace(/_/g, "/");
+  while(s.length % 4) s += "=";
+  const binary = atob(s);
+  const bytes = Uint8Array.from(binary, c => c.charCodeAt(0));
+  return new TextDecoder("utf-8").decode(bytes);
+}
+
+function showParamStatus(msg){
+  const el = document.getElementById("paramStatus");
+  if(el){
+    el.style.display = "block";
+    el.textContent = msg;
+  }
+}
+
+document.getElementById("zoneTabAll").addEventListener("click",()=>{currentZoneMode="all"; updateZoneTabs(); if(currentData) drawZoneMap(currentData);});
+document.getElementById("zoneTabResult").addEventListener("click",()=>{currentZoneMode="result"; updateZoneTabs(); if(currentData) drawZoneMap(currentData);});
+document.getElementById("contactTab").addEventListener("click",()=>{currentContactMode="contact"; updateContactTabs(); if(currentData) drawContactOrTiming(currentData);});
+document.getElementById("timingTab").addEventListener("click",()=>{currentContactMode="timing"; updateContactTabs(); if(currentData) drawContactOrTiming(currentData);});
+
+
+function buildSessionSelector(){
+  const root=document.getElementById("sessionSelector");
+  root.innerHTML="";
+  root.style.display=sessions.length ? "flex" : "none";
+
+  if(sessions.length>1){
+    const allBtn=document.createElement("button");
+    allBtn.className="sessionChip";
+    allBtn.innerHTML=`<strong>ALL MERGED</strong><br>${sessions.length} sessions`;
+    allBtn.onclick=()=>{
+      currentSessionIndex=-1;
+      render(makeMergedData());
+      updateSessionButtons();
+    };
+    root.appendChild(allBtn);
+  }
+
+  sessions.forEach((s,i)=>{
+    const btn=document.createElement("button");
+    btn.className="sessionChip";
+    const label=s.data.session?.id || s.data.session?.startedAtLabel || s.name;
+    const player=s.data.player?.name || "Unknown";
+    btn.innerHTML=`<strong>${escapeShort(label,28)}</strong><br>${escapeShort(player,18)} / ${s.data.pitches?.length||0} pitches`;
+    btn.onclick=()=>{
+      currentSessionIndex=i;
+      render(s.data);
+      updateSessionButtons();
+    };
+    root.appendChild(btn);
+  });
+
+  updateSessionButtons();
+}
+function updateSessionButtons(){
+  const buttons=[...document.querySelectorAll("#sessionSelector button")];
+  buttons.forEach(b=>b.classList.remove("sessionActive"));
+  if(!buttons.length)return;
+  if(sessions.length>1){
+    if(currentSessionIndex<0) buttons[0].classList.add("sessionActive");
+    else buttons[currentSessionIndex+1]?.classList.add("sessionActive");
+  }else{
+    buttons[0]?.classList.add("sessionActive");
+  }
+}
+function makeMergedData(){
+  const merged={
+    player:{name:"ALL MERGED"},
+    session:{
+      id:"ALL_MERGED",
+      type:"MERGED",
+      totalPitches:0,
+      completedPlateAppearances:0
+    },
+    pitches:[]
+  };
+
+  let pitchNo=1;
+  sessions.forEach((s,si)=>{
+    const label=s.data.session?.id || s.name;
+    for(const p of s.data.pitches){
+      const cp=JSON.parse(JSON.stringify(p));
+      cp.originalPitchNo=cp.pitchNo;
+      cp.pitchNo=pitchNo++;
+      cp.sourceSession=label;
+      cp.sourceFile=s.name;
+      merged.pitches.push(cp);
+    }
+    merged.session.completedPlateAppearances += Number(s.data.session?.completedPlateAppearances||0);
+  });
+  merged.session.totalPitches=merged.pitches.length;
+  return merged;
+}
+function escapeShort(s,n){
+  s=String(s??"");
+  return esc(s.length>n?s.slice(0,n-1)+"…":s);
+}
+
+function parseInput(text){
+  if(!text||!text.trim())throw new Error("ファイルが空です。");
+  const attempts=[];
+  const fences=[...text.matchAll(/```(?:json)?\s*([\s\S]*?)```/gi)];
+  for(const f of fences) attempts.push(f[1].trim());
+  attempts.push(text.trim());
+  const first=text.indexOf("{"), last=text.lastIndexOf("}");
+  if(first>=0&&last>first) attempts.push(text.slice(first,last+1));
+  let lastErr=null;
+  for(const s of attempts){
+    try{const data=JSON.parse(s); validate(data); return normalizeZones(data);}
+    catch(e){lastErr=e}
+  }
+  throw new Error("JSON部分を解析できません。```json ... ``` が閉じているか確認してください。詳細: "+lastErr.message);
+}
+function validate(data){
+  if(!data||typeof data!=="object")throw new Error("JSONがオブジェクトではありません。");
+  if(!Array.isArray(data.pitches))throw new Error("pitches 配列がありません。");
+  data.player=data.player||{name:"Unknown"}; data.session=data.session||{};
+}
+function normalizeZones(data){
+  // 表示座標は row 0-4 / column 2-6。
+  // 旧データ row 1-5 / column 1-5 も読めるよう、rowは -1、columnは +1 に寄せる。
+  const rows=data.pitches.map(p=>Number(p.zone?.row)).filter(Number.isFinite);
+  const cols=data.pitches.map(p=>Number(p.zone?.column)).filter(Number.isFinite);
+  const rowMin=Math.min(...rows), rowMax=Math.max(...rows);
+  const colMin=Math.min(...cols), colMax=Math.max(...cols);
+  const oldRow = rows.length && rowMin>=1 && rowMax<=5;
+  const oldCol = cols.length && colMin>=1 && colMax<=5;
+  for(const p of data.pitches){
+    if(!p.zone) continue;
+    const rr=Number(p.zone.row), cc=Number(p.zone.column);
+    p.zone.displayRow = Number.isFinite(rr) ? (oldRow ? rr-1 : rr) : null;
+    p.zone.displayColumn = Number.isFinite(cc) ? (oldCol ? cc+1 : cc) : null;
+  }
+  return data;
+}
+
+function render(data){
+  currentData=data;
+  updateSessionButtons();
+  document.getElementById("error").style.display="none";
+  document.getElementById("content").style.display="grid";
+  document.getElementById("csvBtn").disabled=false;
+  renderKPIs(data); drawSpray(data); updateZoneTabs(); drawZoneMap(data); drawEVLA(data); updateContactTabs(); drawContactOrTiming(data); renderAnalysis(data); renderTable(data);
+}
+function showError(msg){const el=document.getElementById("error");el.style.display="block";el.textContent=msg;}
+function batted(data){return data.pitches.filter(p=>p.battedBall)}
+function avg(a){return a.length?a.reduce((x,y)=>x+y,0)/a.length:0}
+function fmt(n,d=1){return Number.isFinite(Number(n))?Number(n).toFixed(d):"-"}
+function esc(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[m]))}
+function kmhToMph(kmh){return Number(kmh)/1.609344}
+
+// MLB Statcast風バレル判定。
+// 98mphで26-30度、99mphで25-31度、100mphで24-33度、116mph以上で8-50度。
+// 101-115mphは116mphに向けて上下を線形拡張する近似。
+function barrelRangeMph(evMph){
+  if(!Number.isFinite(evMph) || evMph < 98) return null;
+  if(evMph >= 116) return [8,50];
+  if(evMph < 99) return [26,30];
+  if(evMph < 100) return [25,31];
+  if(evMph < 101) return [24,33];
+  const t=(evMph-100)/16;
+  const low=24 + (8-24)*t;
+  const high=33 + (50-33)*t;
+  return [low,high];
+}
+function isBarrel(bb){
+  if(!bb) return false;
+  const evMph=kmhToMph(bb.exitSpeedKmh);
+  const la=Number(bb.launchAngleDeg);
+  const r=barrelRangeMph(evMph);
+  return !!r && Number.isFinite(la) && la>=r[0] && la<=r[1];
+}
+function isHardHit(bb){ return bb && kmhToMph(bb.exitSpeedKmh) >= 95; }
+
+
+function isSwing(p){
+  return p.outcome==="IN_PLAY" || p.outcome==="FOUL" || p.outcome==="STRIKE";
+}
+function isWhiff(p){
+  return p.outcome==="STRIKE" && !p.battedBall;
+}
+function calcSwingRate(data,label){
+  const pitches=data.pitches.filter(p=>p.zone?.label===label);
+  if(!pitches.length) return "-";
+  const swings=pitches.filter(isSwing).length;
+  return ((swings/pitches.length)*100).toFixed(1)+"%";
+}
+
+function calcTakeRate(data,label){
+  const pitches=data.pitches.filter(p=>p.zone?.label===label);
+  if(!pitches.length) return "-";
+  const takes=pitches.filter(p=>!isSwing(p)).length;
+  return ((takes/pitches.length)*100).toFixed(1)+"%";
+}
+
+function calcWhiffRate(data){
+  const swings=data.pitches.filter(isSwing);
+  if(!swings.length) return "-";
+  const whiffs=swings.filter(isWhiff).length;
+  return ((whiffs/swings.length)*100).toFixed(1)+"%";
+}
+
+function renderKPIs(data){
+  const bs=batted(data), total=data.pitches.length;
+  const inplay=data.pitches.filter(p=>p.outcome==="IN_PLAY").length;
+  const ev=avg(bs.map(p=>Number(p.battedBall.exitSpeedKmh)).filter(Number.isFinite));
+  const dist=avg(bs.map(p=>Number(p.battedBall.distance)).filter(Number.isFinite));
+  const nd=avg(bs.map(p=>Number(p.battedBall.contact?.normalizedDistance)).filter(Number.isFinite));
+  const barrels=bs.filter(p=>isBarrel(p.battedBall)).length;
+  const items=[
+    ["Player",data.player?.name||"Unknown"],["Pitches",total],["IN_PLAY",`${inplay} / ${total}`],
+    ["Barrel",`${barrels} / ${bs.length}`],["Avg EV",`${fmt(ev)} km/h`],["Avg Dist",`${fmt(dist)} m`],["Avg ND",fmt(nd,3)],
+    ["Strike Swing%", calcSwingRate(data,"STRIKE")],
+    ["Ball Swing%", calcSwingRate(data,"BALL")],
+    ["Whiff%", calcWhiffRate(data)],["Strike Take%", calcTakeRate(data,"STRIKE")],["Ball Take%", calcTakeRate(data,"BALL")]
+  ];
+  document.getElementById("kpis").innerHTML=items.map(([l,v])=>`<div class="kpi"><div class="label">${esc(l)}</div><div class="value">${esc(v)}</div></div>`).join("");
+}
+
+function drawSpray(data){
+  const c=document.getElementById("spray"), ctx=c.getContext("2d");
+  ctx.clearRect(0,0,c.width,c.height);
+  ctx.fillStyle="#0c0f15";ctx.fillRect(0,0,c.width,c.height);
+
+  const cx=c.width/2, cy=c.height-70, maxDist=160;
+  const scale=Math.min(c.width*0.43,c.height*0.78)/maxDist;
+  function pt(angleDeg, dist){
+    const rad=(angleDeg-90)*Math.PI/180, r=dist*scale;
+    return [cx+Math.cos(rad)*r, cy+Math.sin(rad)*r];
+  }
+
+  for(const d of [30,60,90,120,150]){
+    ctx.beginPath();
+    for(let a=-45;a<=45;a++){
+      const [x,y]=pt(a,d);
+      if(a===-45)ctx.moveTo(x,y);else ctx.lineTo(x,y);
+    }
+    ctx.strokeStyle=d===120?"#ffffff":"#2e3a4e";
+    ctx.lineWidth=d===120?4:1.2;
+    ctx.stroke();
+    if(d!==120){
+      ctx.fillStyle="#8b98ad";ctx.font="12px sans-serif";
+      const [tx,ty]=pt(0,d); ctx.fillText(d+"m",tx+8,ty+4);
+    }
+  }
+
+  ctx.strokeStyle="#d1d5db";ctx.lineWidth=2.5;
+  for(const a of [-45,45]){
+    const [x,y]=pt(a,maxDist);
+    ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(x,y);ctx.stroke();
+  }
+
+  const base=27.431, second=base*Math.SQRT2;
+  const first=pt(45,base), secondPt=pt(0,second), third=pt(-45,base);
+  ctx.strokeStyle="#e5e7eb";ctx.lineWidth=2.5;
+  ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(first[0],first[1]);ctx.lineTo(secondPt[0],secondPt[1]);ctx.lineTo(third[0],third[1]);ctx.closePath();ctx.stroke();
+  ctx.fillStyle="#e5e7eb"; for(const [x,y] of [[cx,cy],first,secondPt,third])ctx.fillRect(x-3,y-3,6,6);
+
+  for(const p of batted(data)){
+    const bb=p.battedBall, angle=Number(bb.sprayAngleDeg)||0, dist=Math.min(Math.max(Number(bb.distance)||0,0),maxDist);
+    const [x,y]=pt(angle,dist);
+    const q=bb.contact?.quality||"";
+    let color="#22c55e";
+    if(q==="SOLID")color="#facc15";
+    if(isHardHit(bb)) color="#fb923c";
+    if(isBarrel(bb)) color="#ef4444";
+    ctx.fillStyle=color;ctx.strokeStyle="#05070a";ctx.lineWidth=2;
+    ctx.beginPath();ctx.arc(x,y,8,0,Math.PI*2);ctx.fill();ctx.stroke();
+    ctx.fillStyle="#0b0d12";ctx.font="bold 11px sans-serif";ctx.textAlign="center";ctx.textBaseline="middle";
+    ctx.fillText(String(p.pitchNo),x,y+0.5);
+  }
+  ctx.textAlign="left";ctx.textBaseline="alphabetic";
+}
+
+const zoneRows=[0,1,2,3,4], zoneCols=[2,3,4,5,6];
+function emptyZoneCells(){
+  return Array.from({length:5},()=>Array.from({length:5},()=>({p:0,ip:0,strike:0,barrel:0,hard:0,ev:0,evn:0,outcomes:{}})));
+}
+function zoneIndex(p){
+  const r=Number(p.zone?.displayRow), c=Number(p.zone?.displayColumn);
+  const ri=zoneRows.indexOf(r), ci=zoneCols.indexOf(c);
+  return ri>=0 && ci>=0 ? [ri,ci] : null;
+}
+function collectCells(data){
+  const cells=emptyZoneCells();
+  for(const p of data.pitches){
+    const idx=zoneIndex(p); if(!idx) continue;
+    const [ri,ci]=idx, cell=cells[ri][ci];
+    cell.p++;
+    if(p.outcome==="IN_PLAY")cell.ip++;
+    if(p.outcome==="STRIKE")cell.strike++;
+    if(isHardHit(p.battedBall))cell.hard++;
+    if(isBarrel(p.battedBall))cell.barrel++;
+    cell.outcomes[p.outcome]=(cell.outcomes[p.outcome]||0)+1;
+    if(Number.isFinite(Number(p.battedBall?.exitSpeedKmh))){cell.ev+=Number(p.battedBall.exitSpeedKmh);cell.evn++}
+  }
+  return cells;
+}
+function drawZoneGrid(canvasId, cells, mode){
+  const c=document.getElementById(canvasId),ctx=c.getContext("2d");
+  ctx.clearRect(0,0,c.width,c.height);ctx.fillStyle="#0c0f15";ctx.fillRect(0,0,c.width,c.height);
+  const pad=28,gap=7,n=5,size=(c.width-pad*2-gap*(n-1))/n;
+  const max=Math.max(1,...cells.flat().map(x=> mode==="all" ? x.p : (x.barrel*4+x.hard*2+x.ip+x.strike*.35)));
+  for(let r=0;r<5;r++){
+    for(let col=0;col<5;col++){
+      const cell=cells[r][col];
+      const score=mode==="all" ? cell.p : (cell.barrel*4+cell.hard*2+cell.ip+cell.strike*.35);
+      const ratio=score/max;
+      const hue=245-ratio*215, light=25+ratio*31;
+      ctx.fillStyle=`hsl(${hue},60%,${light}%)`;
+      const x=pad+col*(size+gap),y=pad+r*(size+gap);
+      ctx.fillRect(x,y,size,size);
+
+      // 3x3 strike zone: r1-3, c3-5
+      const zr=zoneRows[r], zc=zoneCols[col];
+      const inStrikeZone = zr>=1 && zr<=3 && zc>=3 && zc<=5;
+      ctx.strokeStyle=inStrikeZone ? "#ffffff" : "#7f8aa3";
+      ctx.lineWidth=inStrikeZone ? 3.2 : 1.5;
+      ctx.strokeRect(x,y,size,size);
+
+      ctx.fillStyle="#fff";ctx.textAlign="center";ctx.font="bold 22px sans-serif";
+      if(mode==="all"){
+        ctx.fillText(String(cell.p),x+size/2,y+size/2-24);
+        ctx.fillStyle="#93c5fd";ctx.font="12px sans-serif";ctx.fillText(`STR ${cell.strike}`,x+size/2,y+size/2-2);
+        ctx.fillStyle="#d1d5db";ctx.font="12px sans-serif";ctx.fillText(`IP ${cell.ip}`,x+size/2,y+size/2+18);
+      }else{
+        ctx.fillText(`${cell.ip}/${cell.p}`,x+size/2,y+size/2-28);
+        ctx.fillStyle="#93c5fd";ctx.font="12px sans-serif";ctx.fillText(`STR ${cell.strike}`,x+size/2,y+size/2-8);
+        ctx.fillStyle="#fecaca";ctx.font="bold 12px sans-serif";ctx.fillText(`BRL ${cell.barrel}`,x+size/2,y+size/2+12);
+        ctx.fillStyle="#fed7aa";ctx.font="12px sans-serif";ctx.fillText(`HH ${cell.hard}`,x+size/2,y+size/2+30);
+      }
+      ctx.fillStyle="#aab4c6";ctx.font="11px sans-serif";
+      ctx.fillText(`r${zr} c${zc}`,x+size/2,y+size-10);
+    }
+  }
+}
+
+function drawZoneMap(data){
+  const cells = collectCells(data);
+  drawZoneGrid("zoneMap", cells, currentZoneMode);
+}
+function updateZoneTabs(){
+  const all=document.getElementById("zoneTabAll");
+  const result=document.getElementById("zoneTabResult");
+  const title=document.getElementById("zoneTitle");
+  all.classList.toggle("active", currentZoneMode==="all");
+  result.classList.toggle("active", currentZoneMode==="result");
+  title.textContent = currentZoneMode==="all"
+    ? "全球ベース：投球数 / STRIKE / IN_PLAY"
+    : "結果ベース：IN_PLAY / Barrel / Hard Hit";
+}
+
+function scatterBase(c,xLabel,yLabel,xmin,xmax,ymin,ymax){
+  const ctx=c.getContext("2d"),p={l:62,r:24,t:24,b:52};
+  ctx.clearRect(0,0,c.width,c.height);ctx.fillStyle="#0c0f15";ctx.fillRect(0,0,c.width,c.height);
+  ctx.strokeStyle="#344052";ctx.lineWidth=1;ctx.font="12px sans-serif";ctx.fillStyle="#9aa7bb";
+  for(let i=0;i<=5;i++){
+    const x=p.l+(c.width-p.l-p.r)*i/5, y=p.t+(c.height-p.t-p.b)*i/5;
+    ctx.beginPath();ctx.moveTo(x,p.t);ctx.lineTo(x,c.height-p.b);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(p.l,y);ctx.lineTo(c.width-p.r,y);ctx.stroke();
+    const xv=xmin+(xmax-xmin)*i/5, yv=ymax-(ymax-ymin)*i/5;
+    ctx.textAlign="center";ctx.fillText(fmt(xv,0),x,c.height-p.b+18);
+    ctx.textAlign="right";ctx.fillText(fmt(yv,0),p.l-8,y+4);
+  }
+  ctx.strokeStyle="#d1d5db";ctx.strokeRect(p.l,p.t,c.width-p.l-p.r,c.height-p.t-p.b);
+  ctx.fillStyle="#cbd5e1";ctx.font="13px sans-serif";ctx.textAlign="center";
+  ctx.fillText(xLabel,c.width/2,c.height-14);
+  ctx.save();ctx.translate(17,c.height/2);ctx.rotate(-Math.PI/2);ctx.fillText(yLabel,0,0);ctx.restore();
+  return {ctx,mapX:x=>p.l+(x-xmin)/(xmax-xmin)*(c.width-p.l-p.r),mapY:y=>c.height-p.b-(y-ymin)/(ymax-ymin)*(c.height-p.t-p.b),p};
+}
+function drawEVLA(data){
+  const c=document.getElementById("evla"), s=scatterBase(c,"打球速度 km/h","打球角度 deg",140,260,-45,55), ctx=s.ctx;
+
+  // Barrel area
+  ctx.beginPath();
+  let started=false;
+  const ptsLow=[], ptsHigh=[];
+  for(let kmh=98*1.609344; kmh<=260; kmh+=1){
+    const r=barrelRangeMph(kmhToMph(kmh));
+    if(!r) continue;
+    ptsLow.push([s.mapX(kmh),s.mapY(r[0])]);
+    ptsHigh.push([s.mapX(kmh),s.mapY(r[1])]);
+  }
+  for(const [x,y] of ptsLow){ if(!started){ctx.moveTo(x,y);started=true}else ctx.lineTo(x,y); }
+  for(const [x,y] of ptsHigh.reverse()) ctx.lineTo(x,y);
+  ctx.closePath();ctx.fillStyle="rgba(239,68,68,.18)";ctx.fill();ctx.strokeStyle="#ef4444";ctx.lineWidth=2;ctx.stroke();
+  ctx.fillStyle="#ef4444";ctx.font="12px sans-serif";ctx.textAlign="left";ctx.fillText("Barrel Zone",s.mapX(190),s.mapY(48));
+
+  ctx.fillStyle="#9aa7bb";ctx.textAlign="left";ctx.fillText("ゴロ",s.p.l+6,s.mapY(-20));ctx.fillText("ライナー",s.p.l+6,s.mapY(15));ctx.fillText("フライ",s.p.l+6,s.mapY(40));
+  for(const p of batted(data)){
+    const bb=p.battedBall, ev=Number(bb.exitSpeedKmh), la=Number(bb.launchAngleDeg);
+    if(!Number.isFinite(ev)||!Number.isFinite(la))continue;
+    const x=s.mapX(Math.min(Math.max(ev,140),260)), y=s.mapY(Math.min(Math.max(la,-45),55));
+    ctx.fillStyle=isBarrel(bb)?"#ef4444":isHardHit(bb)?"#fb923c":"#60a5fa";
+    ctx.beginPath();ctx.arc(x,y,6.5,0,Math.PI*2);ctx.fill();
+    ctx.fillStyle="#fff";ctx.font="11px sans-serif";ctx.textAlign="left";ctx.fillText("#"+p.pitchNo,x+9,y+4);
+  }
+}
+
+function updateContactTabs(){
+  const ctab=document.getElementById("contactTab");
+  const ttab=document.getElementById("timingTab");
+  const title=document.getElementById("contactTitle");
+  const note=document.getElementById("contactNote");
+  ctab.classList.toggle("active", currentContactMode==="contact");
+  ttab.classList.toggle("active", currentContactMode==="timing");
+  if(currentContactMode==="contact"){
+    title.textContent="Contact Map：offsetRight × offsetUp";
+    note.innerHTML="Contact Map は battedBall.contact の値を表示。横=offsetRight、縦=offsetUp。中心ほど芯に近い。";
+  }else{
+    title.textContent="Timing Map：offsetForward × normalizedDistance";
+    note.innerHTML="Timing Map は offsetForward を表示。＋側=前で捉えた、−側=差し込まれた。縦は芯からの距離で、下ほど良い。";
+  }
+}
+function drawContactOrTiming(data){
+  if(currentContactMode==="timing") drawTiming(data);
+  else drawContact(data);
+}
+function drawContact(data){
+  const c=document.getElementById("contact"), s=scatterBase(c,"左右ズレ offsetRight  ←外側 / 内側→","上下ズレ offsetUp  下っ面 / 上っ面",-0.4,0.4,-0.35,0.6), ctx=s.ctx;
+  const zx=s.mapX(0), zy=s.mapY(0);
+  ctx.strokeStyle="#facc15";ctx.setLineDash([6,5]);ctx.lineWidth=2;
+  ctx.beginPath();ctx.moveTo(zx,s.p.t);ctx.lineTo(zx,c.height-s.p.b);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(s.p.l,zy);ctx.lineTo(c.width-s.p.r,zy);ctx.stroke();
+  ctx.setLineDash([]);
+  for(const r of [0.15,0.3]){
+    const px=s.mapX(r)-zx;
+    ctx.strokeStyle=r===0.15?"rgba(34,197,94,.9)":"rgba(250,204,21,.7)";
+    ctx.beginPath();ctx.arc(zx,zy,Math.abs(px),0,Math.PI*2);ctx.stroke();
+  }
+  ctx.fillStyle="#cbd5e1";ctx.font="12px sans-serif";ctx.textAlign="left";ctx.fillText("中心ほど良い",zx+8,zy-8);
+  for(const p of batted(data)){
+    const ct=p.battedBall.contact;if(!ct)continue;
+    const x=s.mapX(Math.min(Math.max(Number(ct.offsetRight)||0,-0.4),0.4));
+    const y=s.mapY(Math.min(Math.max(Number(ct.offsetUp)||0,-0.35),0.6));
+    const nd=Number(ct.normalizedDistance);
+    ctx.fillStyle=nd<=0.18?"#22c55e":nd<=0.32?"#facc15":"#ef4444";
+    ctx.beginPath();ctx.arc(x,y,6.5,0,Math.PI*2);ctx.fill();
+    ctx.fillStyle="#fff";ctx.font="11px sans-serif";ctx.textAlign="left";ctx.fillText("#"+p.pitchNo,x+9,y+4);
+  }
+}
+function drawTiming(data){
+  const c=document.getElementById("contact"), s=scatterBase(c,"タイミング offsetForward  ←差し込まれ / 前で捉えた→","芯からの距離 normalizedDistance", -0.35,0.35,0,0.7), ctx=s.ctx;
+  const zx=s.mapX(0);
+  ctx.strokeStyle="#facc15";ctx.setLineDash([6,5]);ctx.lineWidth=2;
+  ctx.beginPath();ctx.moveTo(zx,s.p.t);ctx.lineTo(zx,c.height-s.p.b);ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.fillStyle="#cbd5e1";ctx.font="12px sans-serif";ctx.textAlign="left";
+  ctx.fillText("差し込まれ",s.p.l+8,s.p.t+16);
+  ctx.textAlign="right";ctx.fillText("前で捉えた",c.width-s.p.r-8,s.p.t+16);
+  for(const p of batted(data)){
+    const ct=p.battedBall.contact;if(!ct)continue;
+    const x=s.mapX(Math.min(Math.max(Number(ct.offsetForward)||0,-0.35),0.35));
+    const y=s.mapY(Math.min(Math.max(Number(ct.normalizedDistance)||0,0),0.7));
+    const nd=Number(ct.normalizedDistance);
+    ctx.fillStyle=nd<=0.18?"#22c55e":nd<=0.32?"#facc15":"#ef4444";
+    ctx.beginPath();ctx.arc(x,y,6.5,0,Math.PI*2);ctx.fill();
+    ctx.fillStyle="#fff";ctx.font="11px sans-serif";ctx.textAlign="left";ctx.fillText("#"+p.pitchNo,x+9,y+4);
+  }
+}
+
+function renderAnalysis(data){
+  const bs=batted(data), total=data.pitches.length, inplay=data.pitches.filter(p=>p.outcome==="IN_PLAY").length;
+  const evs=bs.map(p=>Number(p.battedBall.exitSpeedKmh)).filter(Number.isFinite);
+  const nds=bs.map(p=>Number(p.battedBall.contact?.normalizedDistance)).filter(Number.isFinite);
+  const barrels=bs.filter(p=>isBarrel(p.battedBall)).map(p=>"#"+p.pitchNo);
+  const hard=bs.filter(p=>isHardHit(p.battedBall)).map(p=>"#"+p.pitchNo);
+  const strike=data.pitches.filter(p=>p.outcome==="STRIKE").map(p=>`#${p.pitchNo}(r${p.zone?.displayRow},c${p.zone?.displayColumn})`);
+  document.getElementById("analysis").innerHTML=`
+  <p><span class="badge">Executive Summary</span><br>${esc(data.player?.name||"Unknown")} は ${total}球中 ${inplay}球をインプレー。平均打球速度 ${fmt(avg(evs))} km/h、平均 normalizedDistance ${fmt(avg(nds),3)}。</p>
+  <p><span class="badge">Barrel</span><br>バレル判定: ${esc(barrels.join(", ")||"なし")}。Hard Hit（95mph以上）: ${esc(hard.join(", ")||"なし")}。</p>
+  <p><span class="badge">Swing Metrics</span><br>Strike Swing%: ${calcSwingRate(data,"STRIKE")} / Ball Swing%: ${calcSwingRate(data,"BALL")} / Strike Take%: ${calcTakeRate(data,"STRIKE")} / Ball Take%: ${calcTakeRate(data,"BALL")} / Whiff%: ${calcWhiffRate(data)}</p><p><span class="badge">Swing Decision</span><br>STRIKE結果: ${esc(strike.join(", ")||"なし")}。ゾーンは r0〜4 / c2〜6 で表示し、3×3ストライクゾーンを太枠にしています。</p>
+  <p><span class="badge">Zone Tendencies</span><br>全球ベースは投球分布、結果ベースは IN_PLAY・Hard Hit・Barrel を見やすくした分布です。</p>`;
+}
+
+function renderTable(data){
+  let pa=1;
+  let rows=`<thead><tr>
+    <th>PA</th><th>Pitch</th><th>Session</th><th>Result</th><th>Ball</th><th>Zone</th><th>Pitch Velo</th>
+    <th>EV km/h</th><th>LA</th><th>Spray</th><th>Dist</th>
+    <th>Timing</th><th>ND</th><th>Barrel</th>
+  </tr></thead><tbody>`;
+
+  for(const p of data.pitches){
+    const bb=p.battedBall,ct=bb?.contact;
+    let rowClass="";
+    if(bb && isBarrel(bb)) rowClass="result-barrel";
+    else if(bb && isHardHit(bb)) rowClass="result-hardhit";
+    else if(p.outcome==="IN_PLAY") rowClass="result-inplay";
+    else if(p.outcome==="BALL") rowClass="result-ball";
+    else if(p.outcome==="FOUL") rowClass="result-foul";
+    else if(p.outcome==="STRIKE") rowClass="result-strike";
+
+    rows += `<tr class="${rowClass}">
+      <td>${pa}</td>
+      <td>#${p.pitchNo}${p.originalPitchNo?`<br><span style="color:#9aa7bb;font-size:11px">orig #${p.originalPitchNo}</span>`:""}</td>
+      <td>${esc(p.sourceSession||"")}</td>
+      <td>${esc(p.outcome)}</td>
+      <td>${esc(p.ballName)}</td>
+      <td>${p.zone?.label||"-"}<br>r${p.zone?.displayRow??"-"} c${p.zone?.displayColumn??"-"}</td><td>${fmt(p.speedKmh)} km/h</td>
+      <td>${bb?fmt(bb.exitSpeedKmh):"-"}</td>
+      
+      <td>${bb?fmt(bb.launchAngleDeg):"-"}</td>
+      <td>${bb?fmt(bb.sprayAngleDeg):"-"}</td>
+      <td>${bb?fmt(bb.distance):"-"}</td>
+      <td>${ct?fmt(ct.offsetForward,3):"-"}</td>
+      <td>${ct?fmt(ct.normalizedDistance,3):"-"}</td>
+      <td>${bb?(isBarrel(bb)?`<span class="barrelBadge">YES</span>`:(isHardHit(bb)?`<span class="hardHitBadge">HH</span>`:"")):"-"}</td>
+    </tr>`;
+
+    if(p.plateAppearanceEnded){
+      rows += `<tr style="background:#101827">
+        <td colspan="14" style="text-align:center;color:#93c5fd;font-weight:bold">
+          End of PA ${pa} (${esc(p.plateAppearanceResult||p.outcome||"")})
+        </td>
+      </tr>`;
+      pa++;
+    }
+  }
+
+  rows += `</tbody>`;
+  document.getElementById("pitchTable").innerHTML=rows;
+}
+function downloadCSV(){
+  if(!currentData)return;
+  const header=["session","pitchNo","originalPitchNo","outcome","ballName","zoneRow","zoneColumn","speedKmh","exitSpeedKmh","launchAngleDeg","sprayAngleDeg","distance","barrel","hardHit","normalizedDistance","quality"];
+  const lines=[header.join(",")];
+  for(const p of currentData.pitches){
+    const bb=p.battedBall,ct=bb?.contact;
+    lines.push([p.sourceSession||"",p.pitchNo,p.originalPitchNo||"",p.outcome,p.ballName,p.zone?.displayRow,p.zone?.displayColumn,p.speedKmh,bb?.exitSpeedKmh,bb?.launchAngleDeg,bb?.sprayAngleDeg,bb?.distance,bb?isBarrel(bb):"",bb?isHardHit(bb):"",ct?.normalizedDistance,ct?.quality].map(v=>`"${String(v??"").replaceAll('"','""')}"`).join(","));
+  }
+  const blob=new Blob([lines.join("\n")],{type:"text/csv;charset=utf-8"});
+  const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=(currentData.session?.id||"batting_session")+".csv";a.click();URL.revokeObjectURL(a.href);
+}
+</script>
+</body>
+</html>
