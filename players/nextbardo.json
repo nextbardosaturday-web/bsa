@@ -1,6 +1,6 @@
 {
   "player": {"name": "nextbardo"},
-  "session": {"id": "MERGED_2026-05-12T20:08:40.050195723", "type": "MERGED", "sourceFileCount": 3, "sourceSessionCount": 3, "totalPitches": 50},
+  "session": {"id": "MERGED_2026-05-12T20:12:36.311216457", "type": "MERGED", "sourceFileCount": 3, "sourceSessionCount": 3, "totalPitches": 50},
   "pitches": [
 {"sourceSession":"2026-05-11-20-55-48","sourcePlayer":"nextbardo","sourceFile":"2026-05-11-20-55-48.md","sourceIndex":1,
       "pitchNo": 1,
