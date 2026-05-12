@@ -81,7 +81,7 @@ tr.result-barrel td{background:rgba(96,165,250,0.12)}
   <section class="drop">
     <strong>打席情報ファイルを選択</strong>
     <div class="sub">
-      対応: .md 内の ```json ブロック / .json / .txt<br>パラメータなし: 手動ファイル読み込み / パラメータあり: 自動読み込み<br>例: ?url=https://example.com/session.json / ?data=Base64URL(JSON)<br>
+      対応: .md 内の ```json ブロック / .json / .txt<br>パラメータなし: 手動ファイル読み込み / パラメータあり: 自動読み込み（404時は自動リトライ）<br>例: ?url=https://example.com/session.json / ?data=Base64URL(JSON)<br>
       複数ファイル選択可能（Windows: Ctrl / Shift、Mac: Command / Shift）<br>
       ALL MERGED で統合分析できます
     </div>
@@ -220,10 +220,8 @@ async function autoLoadFromParams(){
 
   try{
     if(url){
-      showParamStatus("URLパラメータから読み込み中...");
-      const res = await fetch(url);
-      if(!res.ok) throw new Error("URL読み込み失敗: HTTP " + res.status);
-      const text = await res.text();
+      showParamStatus("URLパラメータから読み込み中... GitHub Pages反映待ちの場合は自動で再試行します。");
+      const text = await fetchTextWithRetry(url, 20, 3000);
       const data = parseInput(text);
       render(data);
       showParamStatus("URLパラメータから読み込み完了");
@@ -259,6 +257,48 @@ function decodeBase64Url(s){
   const bytes = Uint8Array.from(binary, c => c.charCodeAt(0));
   return new TextDecoder("utf-8").decode(bytes);
 }
+
+
+async function fetchTextWithRetry(url, maxRetry=20, intervalMs=3000){
+  let lastStatus = "";
+  for(let i=1;i<=maxRetry;i++){
+    const retryUrl = addCacheBust(url);
+    try{
+      showParamStatus(`URL読み込み中... ${i}/${maxRetry}`);
+      const res = await fetch(retryUrl, {cache:"no-store"});
+      if(res.ok){
+        return await res.text();
+      }
+
+      lastStatus = "HTTP " + res.status;
+
+      // GitHub Pages反映待ちで多い404/403/5xxは再試行
+      if(res.status===404 || res.status===403 || res.status>=500){
+        showParamStatus(`GitHub Pages反映待ちの可能性があります。${lastStatus} / ${i}/${maxRetry} 再試行中...`);
+        await sleep(intervalMs);
+        continue;
+      }
+
+      throw new Error("URL読み込み失敗: " + lastStatus);
+    }catch(e){
+      lastStatus = e?.message || String(e);
+      if(i>=maxRetry) break;
+      showParamStatus(`読み込み失敗。${i}/${maxRetry} 再試行中... ${lastStatus}`);
+      await sleep(intervalMs);
+    }
+  }
+  throw new Error(`GitHub Pages反映待ちで読み込めませんでした。最後の状態: ${lastStatus}。少し待って再読み込みしてください。`);
+}
+
+function sleep(ms){
+  return new Promise(resolve=>setTimeout(resolve, ms));
+}
+
+function addCacheBust(url){
+  const sep = url.includes("?") ? "&" : "?";
+  return url + sep + "_t=" + Date.now();
+}
+
 
 function showParamStatus(msg){
   const el = document.getElementById("paramStatus");
