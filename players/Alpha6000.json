@@ -1,6 +1,6 @@
 {
   "player": {"name": "Alpha6000"},
-  "session": {"id": "MERGED_2026-05-12T21:59:55.976025872", "type": "MERGED", "sourceFileCount": 2, "sourceSessionCount": 2, "totalPitches": 86},
+  "session": {"id": "MERGED_2026-05-12T22:56:37.177305792", "type": "MERGED", "sourceFileCount": 2, "sourceSessionCount": 2, "totalPitches": 86},
   "pitches": [
 {"sourceSession":"2026-05-10-09-24-16","sourcePlayer":"Alpha6000","sourceFile":"2026-05-10-09-24-16.md","sourceIndex":1,
       "pitchNo": 1,
