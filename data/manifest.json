@@ -1,19 +1,20 @@
 {
-  "updatedAt": "2026-05-13T23:14:45.888747383",
-  "latestSessionId": "2026-05-13-23-08-13",
+  "updatedAt": "2026-05-14T00:07:42.343075896",
+  "latestSessionId": "2026-05-14-00-01-47",
   "sessions": [
-    {"sessionId": "2026-05-10-09-24-16", "playerName": "Alpha6000", "path": "sessions/Alpha6000/2026-05-10-09-24-16.json", "totalPitches": 17, "startedAt": "2026-05-10-09:24:16"},
-    {"sessionId": "2026-05-11-00-34-20", "playerName": "Pen4", "path": "sessions/Pen4/2026-05-11-00-34-20.json", "totalPitches": 14, "startedAt": "2026-05-11-00:34:20"},
-    {"sessionId": "2026-05-11-00-49-08", "playerName": "Pen4", "path": "sessions/Pen4/2026-05-11-00-49-08.json", "totalPitches": 60, "startedAt": "2026-05-11-00:49:08"},
-    {"sessionId": "2026-05-11-01-01-32", "playerName": "Pen4", "path": "sessions/Pen4/2026-05-11-01-01-32.json", "totalPitches": 19, "startedAt": "2026-05-11-01:01:32"},
-    {"sessionId": "2026-05-11-01-52-59", "playerName": "Alpha6000", "path": "sessions/Alpha6000/2026-05-11-01-52-59.json", "totalPitches": 69, "startedAt": "2026-05-11-01:52:59"},
-    {"sessionId": "2026-05-11-20-55-48", "playerName": "nextbardo", "path": "sessions/nextbardo/2026-05-11-20-55-48.json", "totalPitches": 23, "startedAt": "2026-05-11-20:55:48"},
-    {"sessionId": "2026-05-11-21-56-56", "playerName": "Pen4", "path": "sessions/Pen4/2026-05-11-21-56-56.json", "totalPitches": 27, "startedAt": "2026-05-11-21:56:56"},
-    {"sessionId": "2026-05-11-22-03-16", "playerName": "Pen4", "path": "sessions/Pen4/2026-05-11-22-03-16.json", "totalPitches": 38, "startedAt": "2026-05-11-22:03:16"},
-    {"sessionId": "2026-05-11-22-29-05", "playerName": "nextbardo", "path": "sessions/nextbardo/2026-05-11-22-29-05.json", "totalPitches": 16, "startedAt": "2026-05-11-22:29:05"},
-    {"sessionId": "2026-05-11-23-39-33", "playerName": "nextbardo", "path": "sessions/nextbardo/2026-05-11-23-39-33.json", "totalPitches": 11, "startedAt": "2026-05-11-23:39:33"},
-    {"sessionId": "2026-05-12-00-06-22", "playerName": "Pen4", "path": "sessions/Pen4/2026-05-12-00-06-22.json", "totalPitches": 14, "startedAt": "2026-05-12-00:06:22"},
-    {"sessionId": "2026-05-12-00-17-34", "playerName": "Pen4", "path": "sessions/Pen4/2026-05-12-00-17-34.json", "totalPitches": 23, "startedAt": "2026-05-12-00:17:34"},
-    {"sessionId": "2026-05-13-23-08-13", "playerName": "nextbardo", "path": "sessions/nextbardo/2026-05-13-23-08-13.json", "totalPitches": 13, "startedAt": "2026-05-13-23:08:13"}
+    {"sessionId": "2026-05-10-09-24-16", "playerName": "Alpha6000", "path": "sessions/Alpha6000/2026-05-10-09-24-16.json", "totalPitches": 17},
+    {"sessionId": "2026-05-11-00-34-20", "playerName": "Pen4", "path": "sessions/Pen4/2026-05-11-00-34-20.json", "totalPitches": 14},
+    {"sessionId": "2026-05-11-00-49-08", "playerName": "Pen4", "path": "sessions/Pen4/2026-05-11-00-49-08.json", "totalPitches": 60},
+    {"sessionId": "2026-05-11-01-01-32", "playerName": "Pen4", "path": "sessions/Pen4/2026-05-11-01-01-32.json", "totalPitches": 19},
+    {"sessionId": "2026-05-11-01-52-59", "playerName": "Alpha6000", "path": "sessions/Alpha6000/2026-05-11-01-52-59.json", "totalPitches": 69},
+    {"sessionId": "2026-05-11-20-55-48", "playerName": "nextbardo", "path": "sessions/nextbardo/2026-05-11-20-55-48.json", "totalPitches": 23},
+    {"sessionId": "2026-05-11-21-56-56", "playerName": "Pen4", "path": "sessions/Pen4/2026-05-11-21-56-56.json", "totalPitches": 27},
+    {"sessionId": "2026-05-11-22-03-16", "playerName": "Pen4", "path": "sessions/Pen4/2026-05-11-22-03-16.json", "totalPitches": 38},
+    {"sessionId": "2026-05-11-22-29-05", "playerName": "nextbardo", "path": "sessions/nextbardo/2026-05-11-22-29-05.json", "totalPitches": 16},
+    {"sessionId": "2026-05-11-23-39-33", "playerName": "nextbardo", "path": "sessions/nextbardo/2026-05-11-23-39-33.json", "totalPitches": 11},
+    {"sessionId": "2026-05-12-00-06-22", "playerName": "Pen4", "path": "sessions/Pen4/2026-05-12-00-06-22.json", "totalPitches": 14},
+    {"sessionId": "2026-05-12-00-17-34", "playerName": "Pen4", "path": "sessions/Pen4/2026-05-12-00-17-34.json", "totalPitches": 23},
+    {"sessionId": "2026-05-13-23-08-13", "playerName": "nextbardo", "path": "sessions/nextbardo/2026-05-13-23-08-13.json", "totalPitches": 13},
+    {"sessionId": "2026-05-14-00-01-47", "playerName": "Pen4", "path": "sessions/Pen4/2026-05-14-00-01-47.json", "totalPitches": 33, "startedAt": "2026-05-14-00:01:47"}
   ]
 }
