@@ -1,0 +1,394 @@
+{
+  "source": {"playerName": "Alpha6000", "sessionId": "2026-05-10-09-24-16", "sourceFile": "2026-05-10-09-24-16.md", "pushedAt": "2026-05-13T23:14:24.687560580"},
+  "sessionData": {
+  "player": {
+    "name": "Alpha6000",
+    "uuid": "6b5f025b-2ae6-4f6b-85c2-8feefb86ce0d"
+  },
+  "session": {
+    "id": "2026-05-10-09-24-16",
+    "startedAtLabel": "2026-05-10-09:24:16",
+    "type": "PRACTICE",
+    "closed": true,
+    "targetPlateAppearances": 10,
+    "completedPlateAppearances": 10,
+    "totalPitches": 17
+  },
+  "pitches": [
+    {
+      "pitchNo": 1,
+      "at": "2026-05-10-09:24:20",
+      "outcome": "FOUL",
+      "ballType": "Normal",
+      "ballName": "SFF",
+      "zone": {
+        "label": "STRIKE",
+        "row": 2,
+        "column": 5
+      },
+      "speedKmh": 105.80,
+      "countBefore": {
+        "balls": 0,
+        "strikes": 0
+      },
+      "plateAppearanceEnded": false,
+      "plateAppearanceResult": "FOUL",
+      "prev1": null,
+      "prev2": null,
+      "battedBall": null
+    },
+    {
+      "pitchNo": 2,
+      "at": "2026-05-10-09:24:24",
+      "outcome": "STRIKE",
+      "ballType": "Normal",
+      "ballName": "スライダー",
+      "zone": {
+        "label": "BALL",
+        "row": 4,
+        "column": 5
+      },
+      "speedKmh": 98.86,
+      "countBefore": {
+        "balls": 0,
+        "strikes": 1
+      },
+      "plateAppearanceEnded": false,
+      "plateAppearanceResult": "CONTINUE",
+      "prev1": "Normal/STRIKE/FOUL",
+      "prev2": null,
+      "battedBall": null
+    },
+    {
+      "pitchNo": 3,
+      "at": "2026-05-10-09:24:29",
+      "outcome": "STRIKE",
+      "ballType": "Normal",
+      "ballName": "フォーク",
+      "zone": {
+        "label": "BALL",
+        "row": 0,
+        "column": 4
+      },
+      "speedKmh": 87.86,
+      "countBefore": {
+        "balls": 0,
+        "strikes": 2
+      },
+      "plateAppearanceEnded": true,
+      "plateAppearanceResult": "STRIKEOUT",
+      "prev1": "Normal/BALL/STRIKE",
+      "prev2": "Normal/STRIKE/FOUL",
+      "battedBall": null
+    },
+    {
+      "pitchNo": 4,
+      "at": "2026-05-10-09:24:35",
+      "outcome": "IN_PLAY",
+      "ballType": "Normal",
+      "ballName": "フォーク",
+      "zone": {
+        "label": "BALL",
+        "row": 0,
+        "column": 3
+      },
+      "speedKmh": 88.37,
+      "countBefore": {
+        "balls": 0,
+        "strikes": 0
+      },
+      "plateAppearanceEnded": true,
+      "plateAppearanceResult": "IN_PLAY",
+      "prev1": "Normal/BALL/STRIKE",
+      "prev2": "Normal/BALL/STRIKE",
+      "battedBall": {"localX":-11.4822,"localZ":98.8635,"distance":99.5281,"sprayAngleDeg":-6.6248,"launchAngleDeg":31.0360,"exitSpeedKmh":158.5661,"contact":{"offsetForward":0.5599,"offsetRight":-0.9504,"offsetUp":0.9907,"offsetDistance":1.4827,"normalizedDistance":1.2356,"quality":"OFF_CENTER"},"method":"estimated"}
+    },
+    {
+      "pitchNo": 5,
+      "at": "2026-05-10-09:24:39",
+      "outcome": "IN_PLAY",
+      "ballType": "Normal",
+      "ballName": "ライズボール",
+      "zone": {
+        "label": "STRIKE",
+        "row": 3,
+        "column": 3
+      },
+      "speedKmh": 117.63,
+      "countBefore": {
+        "balls": 0,
+        "strikes": 0
+      },
+      "plateAppearanceEnded": true,
+      "plateAppearanceResult": "IN_PLAY",
+      "prev1": "Normal/BALL/IN_PLAY",
+      "prev2": "Normal/BALL/STRIKE",
+      "battedBall": {"localX":-19.4529,"localZ":106.6066,"distance":108.3669,"sprayAngleDeg":-10.3412,"launchAngleDeg":50.6037,"exitSpeedKmh":179.3861,"contact":{"offsetForward":0.0645,"offsetRight":-0.1117,"offsetUp":0.6042,"offsetDistance":0.6178,"normalizedDistance":0.5148,"quality":"SOLID"},"method":"estimated"}
+    },
+    {
+      "pitchNo": 6,
+      "at": "2026-05-10-09:24:44",
+      "outcome": "STRIKE",
+      "ballType": "Normal",
+      "ballName": "スライダー",
+      "zone": {
+        "label": "STRIKE",
+        "row": 3,
+        "column": 4
+      },
+      "speedKmh": 98.59,
+      "countBefore": {
+        "balls": 0,
+        "strikes": 0
+      },
+      "plateAppearanceEnded": false,
+      "plateAppearanceResult": "CONTINUE",
+      "prev1": "Normal/STRIKE/IN_PLAY",
+      "prev2": "Normal/BALL/IN_PLAY",
+      "battedBall": null
+    },
+    {
+      "pitchNo": 7,
+      "at": "2026-05-10-09:24:48",
+      "outcome": "STRIKE",
+      "ballType": "Normal",
+      "ballName": "ライズボール",
+      "zone": {
+        "label": "BALL",
+        "row": 4,
+        "column": 3
+      },
+      "speedKmh": 119.41,
+      "countBefore": {
+        "balls": 0,
+        "strikes": 1
+      },
+      "plateAppearanceEnded": false,
+      "plateAppearanceResult": "CONTINUE",
+      "prev1": "Normal/STRIKE/STRIKE",
+      "prev2": "Normal/STRIKE/IN_PLAY",
+      "battedBall": null
+    },
+    {
+      "pitchNo": 8,
+      "at": "2026-05-10-09:24:52",
+      "outcome": "IN_PLAY",
+      "ballType": "Normal",
+      "ballName": "スライダー",
+      "zone": {
+        "label": "BALL",
+        "row": 0,
+        "column": 4
+      },
+      "speedKmh": 96.65,
+      "countBefore": {
+        "balls": 0,
+        "strikes": 2
+      },
+      "plateAppearanceEnded": true,
+      "plateAppearanceResult": "IN_PLAY",
+      "prev1": "Normal/BALL/STRIKE",
+      "prev2": "Normal/STRIKE/STRIKE",
+      "battedBall": {"localX":-23.5495,"localZ":91.6875,"distance":94.6635,"sprayAngleDeg":-14.4048,"launchAngleDeg":41.8814,"exitSpeedKmh":154.6204,"contact":{"offsetForward":0.1700,"offsetRight":-0.6735,"offsetUp":1.1952,"offsetDistance":1.3824,"normalizedDistance":1.1520,"quality":"OFF_CENTER"},"method":"estimated"}
+    },
+    {
+      "pitchNo": 9,
+      "at": "2026-05-10-09:24:56",
+      "outcome": "IN_PLAY",
+      "ballType": "Normal",
+      "ballName": "ライズボール",
+      "zone": {
+        "label": "STRIKE",
+        "row": 2,
+        "column": 5
+      },
+      "speedKmh": 117.29,
+      "countBefore": {
+        "balls": 0,
+        "strikes": 0
+      },
+      "plateAppearanceEnded": true,
+      "plateAppearanceResult": "IN_PLAY",
+      "prev1": "Normal/BALL/IN_PLAY",
+      "prev2": "Normal/BALL/STRIKE",
+      "battedBall": {"localX":-22.9327,"localZ":121.3151,"distance":123.4636,"sprayAngleDeg":-10.7046,"launchAngleDeg":39.9382,"exitSpeedKmh":182.9753,"contact":{"offsetForward":0.2704,"offsetRight":-0.3188,"offsetUp":0.7172,"offsetDistance":0.8302,"normalizedDistance":0.6918,"quality":"SOLID"},"method":"estimated"}
+    },
+    {
+      "pitchNo": 10,
+      "at": "2026-05-10-09:25:00",
+      "outcome": "STRIKE",
+      "ballType": "Normal",
+      "ballName": "フォーク",
+      "zone": {
+        "label": "STRIKE",
+        "row": 3,
+        "column": 3
+      },
+      "speedKmh": 89.16,
+      "countBefore": {
+        "balls": 0,
+        "strikes": 0
+      },
+      "plateAppearanceEnded": false,
+      "plateAppearanceResult": "CONTINUE",
+      "prev1": "Normal/STRIKE/IN_PLAY",
+      "prev2": "Normal/BALL/IN_PLAY",
+      "battedBall": null
+    },
+    {
+      "pitchNo": 11,
+      "at": "2026-05-10-09:25:04",
+      "outcome": "IN_PLAY",
+      "ballType": "Normal",
+      "ballName": "SFF",
+      "zone": {
+        "label": "STRIKE",
+        "row": 2,
+        "column": 3
+      },
+      "speedKmh": 105.82,
+      "countBefore": {
+        "balls": 0,
+        "strikes": 1
+      },
+      "plateAppearanceEnded": true,
+      "plateAppearanceResult": "IN_PLAY",
+      "prev1": "Normal/STRIKE/STRIKE",
+      "prev2": "Normal/STRIKE/IN_PLAY",
+      "battedBall": {"localX":-9.9995,"localZ":83.1810,"distance":83.7799,"sprayAngleDeg":-6.8549,"launchAngleDeg":21.5454,"exitSpeedKmh":152.4821,"contact":{"offsetForward":1.0523,"offsetRight":-1.2144,"offsetUp":0.8219,"offsetDistance":1.8049,"normalizedDistance":1.5041,"quality":"OFF_CENTER"},"method":"estimated"}
+    },
+    {
+      "pitchNo": 12,
+      "at": "2026-05-10-09:25:08",
+      "outcome": "IN_PLAY",
+      "ballType": "Normal",
+      "ballName": "フォーク",
+      "zone": {
+        "label": "BALL",
+        "row": 0,
+        "column": 3
+      },
+      "speedKmh": 88.37,
+      "countBefore": {
+        "balls": 0,
+        "strikes": 0
+      },
+      "plateAppearanceEnded": true,
+      "plateAppearanceResult": "IN_PLAY",
+      "prev1": "Normal/STRIKE/IN_PLAY",
+      "prev2": "Normal/STRIKE/STRIKE",
+      "battedBall": {"localX":-27.5284,"localZ":104.0452,"distance":107.6254,"sprayAngleDeg":-14.8198,"launchAngleDeg":40.5719,"exitSpeedKmh":166.6606,"contact":{"offsetForward":0.1981,"offsetRight":-0.5745,"offsetUp":0.9522,"offsetDistance":1.1296,"normalizedDistance":0.9413,"quality":"OFF_CENTER"},"method":"estimated"}
+    },
+    {
+      "pitchNo": 13,
+      "at": "2026-05-10-09:25:12",
+      "outcome": "IN_PLAY",
+      "ballType": "Normal",
+      "ballName": "ライズボール",
+      "zone": {
+        "label": "STRIKE",
+        "row": 3,
+        "column": 4
+      },
+      "speedKmh": 117.56,
+      "countBefore": {
+        "balls": 0,
+        "strikes": 0
+      },
+      "plateAppearanceEnded": true,
+      "plateAppearanceResult": "IN_PLAY",
+      "prev1": "Normal/BALL/IN_PLAY",
+      "prev2": "Normal/STRIKE/IN_PLAY",
+      "battedBall": {"localX":-45.1316,"localZ":109.1755,"distance":118.1361,"sprayAngleDeg":-22.4595,"launchAngleDeg":32.3976,"exitSpeedKmh":177.8516,"contact":{"offsetForward":0.0319,"offsetRight":-0.7033,"offsetUp":0.7005,"offsetDistance":0.9931,"normalizedDistance":0.8276,"quality":"SOLID"},"method":"estimated"}
+    },
+    {
+      "pitchNo": 14,
+      "at": "2026-05-10-09:25:16",
+      "outcome": "STRIKE",
+      "ballType": "Normal",
+      "ballName": "スライダー",
+      "zone": {
+        "label": "BALL",
+        "row": 0,
+        "column": 4
+      },
+      "speedKmh": 97.42,
+      "countBefore": {
+        "balls": 0,
+        "strikes": 0
+      },
+      "plateAppearanceEnded": false,
+      "plateAppearanceResult": "CONTINUE",
+      "prev1": "Normal/STRIKE/IN_PLAY",
+      "prev2": "Normal/BALL/IN_PLAY",
+      "battedBall": null
+    },
+    {
+      "pitchNo": 15,
+      "at": "2026-05-10-09:25:19",
+      "outcome": "IN_PLAY",
+      "ballType": "Normal",
+      "ballName": "SFF",
+      "zone": {
+        "label": "STRIKE",
+        "row": 3,
+        "column": 5
+      },
+      "speedKmh": 106.11,
+      "countBefore": {
+        "balls": 0,
+        "strikes": 1
+      },
+      "plateAppearanceEnded": true,
+      "plateAppearanceResult": "IN_PLAY",
+      "prev1": "Normal/BALL/STRIKE",
+      "prev2": "Normal/STRIKE/IN_PLAY",
+      "battedBall": {"localX":-13.2546,"localZ":73.5576,"distance":74.7422,"sprayAngleDeg":-10.2147,"launchAngleDeg":12.8017,"exitSpeedKmh":169.1569,"contact":{"offsetForward":0.8399,"offsetRight":-1.1165,"offsetUp":0.2944,"offsetDistance":1.4278,"normalizedDistance":1.1898,"quality":"OFF_CENTER"},"method":"estimated"}
+    },
+    {
+      "pitchNo": 16,
+      "at": "2026-05-10-09:25:23",
+      "outcome": "STRIKE",
+      "ballType": "Normal",
+      "ballName": "スライダー",
+      "zone": {
+        "label": "BALL",
+        "row": 4,
+        "column": 5
+      },
+      "speedKmh": 98.23,
+      "countBefore": {
+        "balls": 0,
+        "strikes": 0
+      },
+      "plateAppearanceEnded": false,
+      "plateAppearanceResult": "CONTINUE",
+      "prev1": "Normal/STRIKE/IN_PLAY",
+      "prev2": "Normal/BALL/STRIKE",
+      "battedBall": null
+    },
+    {
+      "pitchNo": 17,
+      "at": "2026-05-10-09:25:26",
+      "outcome": "IN_PLAY",
+      "ballType": "Normal",
+      "ballName": "SFF",
+      "zone": {
+        "label": "STRIKE",
+        "row": 2,
+        "column": 3
+      },
+      "speedKmh": 105.85,
+      "countBefore": {
+        "balls": 0,
+        "strikes": 1
+      },
+      "plateAppearanceEnded": true,
+      "plateAppearanceResult": "IN_PLAY",
+      "prev1": "Normal/BALL/STRIKE",
+      "prev2": "Normal/STRIKE/IN_PLAY",
+      "battedBall": {"localX":-9.2790,"localZ":79.0021,"distance":79.5451,"sprayAngleDeg":-6.6989,"launchAngleDeg":21.5482,"exitSpeedKmh":148.8414,"contact":{"offsetForward":1.0900,"offsetRight":-1.2965,"offsetUp":0.8681,"offsetDistance":1.9034,"normalizedDistance":1.5861,"quality":"OFF_CENTER"},"method":"estimated"}
+    }
+  ]
+}
+}
