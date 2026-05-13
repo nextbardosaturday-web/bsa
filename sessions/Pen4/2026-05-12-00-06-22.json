@@ -1,0 +1,370 @@
+{
+  "source": {"playerName": "Pen4", "sessionId": "2026-05-12-00-06-22", "sourceFile": "2026-05-12-00-06-22.md", "pushedAt": "2026-05-13T23:14:41.234497987"},
+  "sessionData": {
+  "player": {
+    "name": "Pen4",
+    "uuid": "c17c7abf-b429-426b-a812-fa587a86b9d7"
+  },
+  "session": {
+    "id": "2026-05-12-00-06-22",
+    "startedAtLabel": "2026-05-12-00:06:22",
+    "type": "PRACTICE",
+    "closed": true,
+    "targetPlateAppearances": 10,
+    "completedPlateAppearances": 10,
+    "totalPitches": 14
+  },
+  "pitches": [
+    {
+      "pitchNo": 1,
+      "at": "2026-05-12-00:06:27",
+      "outcome": "STRIKE",
+      "ballType": "Normal",
+      "ballName": "ファストボール",
+      "zone": {
+        "label": "STRIKE",
+        "row": 1,
+        "column": 3,
+        "rowLabelJa": "やや高め",
+        "columnLabelJa": "やや内角",
+        "columnPerspectiveJa": "投手視点"
+      },
+      "speedKmh": 121.12,
+      "countBefore": {
+        "balls": 0,
+        "strikes": 0
+      },
+      "plateAppearanceEnded": false,
+      "plateAppearanceResult": "CONTINUE",
+      "prev1": null,
+      "prev2": null,
+      "battedBall": null
+    },
+    {
+      "pitchNo": 2,
+      "at": "2026-05-12-00:06:30",
+      "outcome": "IN_PLAY",
+      "ballType": "Normal",
+      "ballName": "ファストボール",
+      "zone": {
+        "label": "STRIKE",
+        "row": 2,
+        "column": 5,
+        "rowLabelJa": "真ん中",
+        "columnLabelJa": "不明",
+        "columnPerspectiveJa": "投手視点"
+      },
+      "speedKmh": 120.39,
+      "countBefore": {
+        "balls": 0,
+        "strikes": 1
+      },
+      "plateAppearanceEnded": true,
+      "plateAppearanceResult": "IN_PLAY",
+      "prev1": "Normal/STRIKE/STRIKE",
+      "prev2": null,
+      "battedBall": {"localX":41.5269,"localZ":319.9299,"distance":322.6137,"sprayAngleDeg":7.3956,"launchAngleDeg":41.5616,"exitSpeedKmh":370.4652,"contact":{"offsetForward":0.3478,"offsetRight":-0.1119,"offsetUp":0.5423,"offsetDistance":0.6539,"normalizedDistance":0.1868,"quality":"SWEET","qualityJa":"芯付近","timingJa":"前さばき気味","lateralJa":"外寄りヒット","verticalJa":"高め側ヒット"},"method":"estimated"}
+    },
+    {
+      "pitchNo": 3,
+      "at": "2026-05-12-00:06:34",
+      "outcome": "IN_PLAY",
+      "ballType": "Normal",
+      "ballName": "ファストボール",
+      "zone": {
+        "label": "STRIKE",
+        "row": 1,
+        "column": 5,
+        "rowLabelJa": "やや高め",
+        "columnLabelJa": "不明",
+        "columnPerspectiveJa": "投手視点"
+      },
+      "speedKmh": 120.14,
+      "countBefore": {
+        "balls": 0,
+        "strikes": 0
+      },
+      "plateAppearanceEnded": true,
+      "plateAppearanceResult": "IN_PLAY",
+      "prev1": "Normal/STRIKE/IN_PLAY",
+      "prev2": "Normal/STRIKE/STRIKE",
+      "battedBall": {"localX":-30.2271,"localZ":244.5755,"distance":246.4363,"sprayAngleDeg":-7.0455,"launchAngleDeg":49.1600,"exitSpeedKmh":323.2924,"contact":{"offsetForward":0.2086,"offsetRight":-0.3159,"offsetUp":0.5809,"offsetDistance":0.6934,"normalizedDistance":0.1981,"quality":"SWEET","qualityJa":"芯付近","timingJa":"前さばき気味","lateralJa":"外寄りヒット","verticalJa":"高め側ヒット"},"method":"estimated"}
+    },
+    {
+      "pitchNo": 4,
+      "at": "2026-05-12-00:06:38",
+      "outcome": "IN_PLAY",
+      "ballType": "Normal",
+      "ballName": "ファストボール",
+      "zone": {
+        "label": "STRIKE",
+        "row": 3,
+        "column": 4,
+        "rowLabelJa": "やや低め",
+        "columnLabelJa": "内角",
+        "columnPerspectiveJa": "投手視点"
+      },
+      "speedKmh": 120.73,
+      "countBefore": {
+        "balls": 0,
+        "strikes": 0
+      },
+      "plateAppearanceEnded": true,
+      "plateAppearanceResult": "IN_PLAY",
+      "prev1": "Normal/STRIKE/IN_PLAY",
+      "prev2": "Normal/STRIKE/IN_PLAY",
+      "battedBall": {"localX":-37.9757,"localZ":342.4622,"distance":344.5613,"sprayAngleDeg":-6.3277,"launchAngleDeg":28.6658,"exitSpeedKmh":375.4322,"contact":{"offsetForward":0.2575,"offsetRight":-0.1767,"offsetUp":0.1893,"offsetDistance":0.3651,"normalizedDistance":0.1030,"quality":"SWEET","qualityJa":"芯付近","timingJa":"前さばき気味","lateralJa":"外寄りヒット","verticalJa":"高め側ヒット"},"method":"estimated"}
+    },
+    {
+      "pitchNo": 5,
+      "at": "2026-05-12-00:06:43",
+      "outcome": "STRIKE",
+      "ballType": "Normal",
+      "ballName": "ファストボール",
+      "zone": {
+        "label": "STRIKE",
+        "row": 1,
+        "column": 3,
+        "rowLabelJa": "やや高め",
+        "columnLabelJa": "やや内角",
+        "columnPerspectiveJa": "投手視点"
+      },
+      "speedKmh": 121.14,
+      "countBefore": {
+        "balls": 0,
+        "strikes": 0
+      },
+      "plateAppearanceEnded": false,
+      "plateAppearanceResult": "CONTINUE",
+      "prev1": "Normal/STRIKE/IN_PLAY",
+      "prev2": "Normal/STRIKE/IN_PLAY",
+      "battedBall": null
+    },
+    {
+      "pitchNo": 6,
+      "at": "2026-05-12-00:06:47",
+      "outcome": "STRIKE",
+      "ballType": "Normal",
+      "ballName": "ファストボール",
+      "zone": {
+        "label": "STRIKE",
+        "row": 2,
+        "column": 5,
+        "rowLabelJa": "真ん中",
+        "columnLabelJa": "不明",
+        "columnPerspectiveJa": "投手視点"
+      },
+      "speedKmh": 121.47,
+      "countBefore": {
+        "balls": 0,
+        "strikes": 1
+      },
+      "plateAppearanceEnded": false,
+      "plateAppearanceResult": "CONTINUE",
+      "prev1": "Normal/STRIKE/STRIKE",
+      "prev2": "Normal/STRIKE/IN_PLAY",
+      "battedBall": null
+    },
+    {
+      "pitchNo": 7,
+      "at": "2026-05-12-00:06:51",
+      "outcome": "IN_PLAY",
+      "ballType": "Normal",
+      "ballName": "ファストボール",
+      "zone": {
+        "label": "CENTER",
+        "row": 2,
+        "column": 4,
+        "rowLabelJa": "真ん中",
+        "columnLabelJa": "内角",
+        "columnPerspectiveJa": "投手視点"
+      },
+      "speedKmh": 120.70,
+      "countBefore": {
+        "balls": 0,
+        "strikes": 2
+      },
+      "plateAppearanceEnded": true,
+      "plateAppearanceResult": "IN_PLAY",
+      "prev1": "Normal/STRIKE/STRIKE",
+      "prev2": "Normal/STRIKE/STRIKE",
+      "battedBall": {"localX":33.9414,"localZ":179.2910,"distance":182.4754,"sprayAngleDeg":10.7197,"launchAngleDeg":18.6779,"exitSpeedKmh":262.4657,"contact":{"offsetForward":2.0263,"offsetRight":-0.0610,"offsetUp":0.7497,"offsetDistance":2.1614,"normalizedDistance":0.6099,"quality":"SOLID","qualityJa":"良好","timingJa":"前さばき気味","lateralJa":"中央寄りヒット","verticalJa":"高め側ヒット"},"method":"estimated"}
+    },
+    {
+      "pitchNo": 8,
+      "at": "2026-05-12-00:06:55",
+      "outcome": "IN_PLAY",
+      "ballType": "Normal",
+      "ballName": "ファストボール",
+      "zone": {
+        "label": "STRIKE",
+        "row": 2,
+        "column": 5,
+        "rowLabelJa": "真ん中",
+        "columnLabelJa": "不明",
+        "columnPerspectiveJa": "投手視点"
+      },
+      "speedKmh": 120.70,
+      "countBefore": {
+        "balls": 0,
+        "strikes": 0
+      },
+      "plateAppearanceEnded": true,
+      "plateAppearanceResult": "IN_PLAY",
+      "prev1": "Normal/CENTER/IN_PLAY",
+      "prev2": "Normal/STRIKE/STRIKE",
+      "battedBall": {"localX":16.4303,"localZ":159.7317,"distance":160.5745,"sprayAngleDeg":5.8729,"launchAngleDeg":11.9989,"exitSpeedKmh":280.9054,"contact":{"offsetForward":1.7917,"offsetRight":-0.3478,"offsetUp":0.2730,"offsetDistance":1.8455,"normalizedDistance":0.5273,"quality":"SOLID","qualityJa":"良好","timingJa":"前さばき気味","lateralJa":"外寄りヒット","verticalJa":"高め側ヒット"},"method":"estimated"}
+    },
+    {
+      "pitchNo": 9,
+      "at": "2026-05-12-00:06:58",
+      "outcome": "IN_PLAY",
+      "ballType": "Normal",
+      "ballName": "ファストボール",
+      "zone": {
+        "label": "STRIKE",
+        "row": 1,
+        "column": 5,
+        "rowLabelJa": "やや高め",
+        "columnLabelJa": "不明",
+        "columnPerspectiveJa": "投手視点"
+      },
+      "speedKmh": 120.17,
+      "countBefore": {
+        "balls": 0,
+        "strikes": 0
+      },
+      "plateAppearanceEnded": true,
+      "plateAppearanceResult": "IN_PLAY",
+      "prev1": "Normal/STRIKE/IN_PLAY",
+      "prev2": "Normal/CENTER/IN_PLAY",
+      "battedBall": {"localX":51.4064,"localZ":274.6289,"distance":279.3988,"sprayAngleDeg":10.6022,"launchAngleDeg":45.5875,"exitSpeedKmh":342.8384,"contact":{"offsetForward":0.3856,"offsetRight":-0.1096,"offsetUp":0.7972,"offsetDistance":0.8923,"normalizedDistance":0.2550,"quality":"SWEET","qualityJa":"芯付近","timingJa":"前さばき気味","lateralJa":"外寄りヒット","verticalJa":"高め側ヒット"},"method":"estimated"}
+    },
+    {
+      "pitchNo": 10,
+      "at": "2026-05-12-00:07:04",
+      "outcome": "IN_PLAY",
+      "ballType": "Normal",
+      "ballName": "ファストボール",
+      "zone": {
+        "label": "STRIKE",
+        "row": 3,
+        "column": 5,
+        "rowLabelJa": "やや低め",
+        "columnLabelJa": "不明",
+        "columnPerspectiveJa": "投手視点"
+      },
+      "speedKmh": 121.00,
+      "countBefore": {
+        "balls": 0,
+        "strikes": 0
+      },
+      "plateAppearanceEnded": true,
+      "plateAppearanceResult": "IN_PLAY",
+      "prev1": "Normal/STRIKE/IN_PLAY",
+      "prev2": "Normal/STRIKE/IN_PLAY",
+      "battedBall": {"localX":12.7700,"localZ":73.5369,"distance":74.6375,"sprayAngleDeg":9.8514,"launchAngleDeg":3.3008,"exitSpeedKmh":284.0477,"contact":{"offsetForward":1.9153,"offsetRight":-0.0322,"offsetUp":-0.1744,"offsetDistance":1.9235,"normalizedDistance":0.5496,"quality":"SOLID","qualityJa":"良好","timingJa":"前さばき気味","lateralJa":"中央寄りヒット","verticalJa":"低め側ヒット"},"method":"estimated"}
+    },
+    {
+      "pitchNo": 11,
+      "at": "2026-05-12-00:07:07",
+      "outcome": "IN_PLAY",
+      "ballType": "Normal",
+      "ballName": "ファストボール",
+      "zone": {
+        "label": "STRIKE",
+        "row": 3,
+        "column": 3,
+        "rowLabelJa": "やや低め",
+        "columnLabelJa": "やや内角",
+        "columnPerspectiveJa": "投手視点"
+      },
+      "speedKmh": 121.06,
+      "countBefore": {
+        "balls": 0,
+        "strikes": 0
+      },
+      "plateAppearanceEnded": true,
+      "plateAppearanceResult": "IN_PLAY",
+      "prev1": "Normal/STRIKE/IN_PLAY",
+      "prev2": "Normal/STRIKE/IN_PLAY",
+      "battedBall": {"localX":40.5408,"localZ":165.7694,"distance":170.6547,"sprayAngleDeg":13.7426,"launchAngleDeg":13.2279,"exitSpeedKmh":280.8383,"contact":{"offsetForward":2.0173,"offsetRight":0.1757,"offsetUp":0.4098,"offsetDistance":2.0660,"normalizedDistance":0.5903,"quality":"SOLID","qualityJa":"良好","timingJa":"前さばき気味","lateralJa":"内寄りヒット","verticalJa":"高め側ヒット"},"method":"estimated"}
+    },
+    {
+      "pitchNo": 12,
+      "at": "2026-05-12-00:07:11",
+      "outcome": "IN_PLAY",
+      "ballType": "Normal",
+      "ballName": "ファストボール",
+      "zone": {
+        "label": "STRIKE",
+        "row": 2,
+        "column": 5,
+        "rowLabelJa": "真ん中",
+        "columnLabelJa": "不明",
+        "columnPerspectiveJa": "投手視点"
+      },
+      "speedKmh": 120.48,
+      "countBefore": {
+        "balls": 0,
+        "strikes": 0
+      },
+      "plateAppearanceEnded": true,
+      "plateAppearanceResult": "IN_PLAY",
+      "prev1": "Normal/STRIKE/IN_PLAY",
+      "prev2": "Normal/STRIKE/IN_PLAY",
+      "battedBall": {"localX":18.5848,"localZ":314.8717,"distance":315.4197,"sprayAngleDeg":3.3779,"launchAngleDeg":41.2115,"exitSpeedKmh":363.1581,"contact":{"offsetForward":0.3609,"offsetRight":-0.1723,"offsetUp":0.5482,"offsetDistance":0.6785,"normalizedDistance":0.1939,"quality":"SWEET","qualityJa":"芯付近","timingJa":"前さばき気味","lateralJa":"外寄りヒット","verticalJa":"高め側ヒット"},"method":"estimated"}
+    },
+    {
+      "pitchNo": 13,
+      "at": "2026-05-12-00:07:15",
+      "outcome": "STRIKE",
+      "ballType": "Normal",
+      "ballName": "ファストボール",
+      "zone": {
+        "label": "STRIKE",
+        "row": 1,
+        "column": 3,
+        "rowLabelJa": "やや高め",
+        "columnLabelJa": "やや内角",
+        "columnPerspectiveJa": "投手視点"
+      },
+      "speedKmh": 121.21,
+      "countBefore": {
+        "balls": 0,
+        "strikes": 0
+      },
+      "plateAppearanceEnded": false,
+      "plateAppearanceResult": "CONTINUE",
+      "prev1": "Normal/STRIKE/IN_PLAY",
+      "prev2": "Normal/STRIKE/IN_PLAY",
+      "battedBall": null
+    },
+    {
+      "pitchNo": 14,
+      "at": "2026-05-12-00:07:21",
+      "outcome": "IN_PLAY",
+      "ballType": "Normal",
+      "ballName": "ファストボール",
+      "zone": {
+        "label": "STRIKE",
+        "row": 3,
+        "column": 3,
+        "rowLabelJa": "やや低め",
+        "columnLabelJa": "やや内角",
+        "columnPerspectiveJa": "投手視点"
+      },
+      "speedKmh": 120.80,
+      "countBefore": {
+        "balls": 0,
+        "strikes": 1
+      },
+      "plateAppearanceEnded": true,
+      "plateAppearanceResult": "IN_PLAY",
+      "prev1": "Normal/STRIKE/STRIKE",
+      "prev2": "Normal/STRIKE/IN_PLAY",
+      "battedBall": {"localX":1.2767,"localZ":6.2819,"distance":6.4104,"sprayAngleDeg":11.4880,"launchAngleDeg":-17.8121,"exitSpeedKmh":384.6482,"contact":{"offsetForward":0.1854,"offsetRight":-0.0028,"offsetUp":-0.1522,"offsetDistance":0.2399,"normalizedDistance":0.0677,"quality":"SWEET","qualityJa":"芯付近","timingJa":"前さばき気味","lateralJa":"中央寄りヒット","verticalJa":"低め側ヒット"},"method":"estimated"}
+    }
+  ]
+}
+}
