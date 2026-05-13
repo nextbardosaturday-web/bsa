@@ -1,0 +1,328 @@
+{
+  "source": {"playerName": "Pen4", "sessionId": "2026-05-11-00-34-20", "sourceFile": "2026-05-11-00-34-20.md", "pushedAt": "2026-05-13T23:14:26.077052171"},
+  "sessionData": {
+  "player": {
+    "name": "Pen4",
+    "uuid": "c17c7abf-b429-426b-a812-fa587a86b9d7"
+  },
+  "session": {
+    "id": "2026-05-11-00-34-20",
+    "startedAtLabel": "2026-05-11-00:34:20",
+    "type": "PRACTICE",
+    "closed": true,
+    "targetPlateAppearances": 10,
+    "completedPlateAppearances": 10,
+    "totalPitches": 14
+  },
+  "pitches": [
+    {
+      "pitchNo": 1,
+      "at": "2026-05-11-00:34:57",
+      "outcome": "STRIKE",
+      "ballType": "Normal",
+      "ballName": "ファストボール",
+      "zone": {
+        "label": "STRIKE",
+        "row": 1,
+        "column": 5
+      },
+      "speedKmh": 121.17,
+      "countBefore": {
+        "balls": 0,
+        "strikes": 0
+      },
+      "plateAppearanceEnded": false,
+      "plateAppearanceResult": "CONTINUE",
+      "prev1": null,
+      "prev2": null,
+      "battedBall": null
+    },
+    {
+      "pitchNo": 2,
+      "at": "2026-05-11-00:35:01",
+      "outcome": "IN_PLAY",
+      "ballType": "Normal",
+      "ballName": "ファストボール",
+      "zone": {
+        "label": "STRIKE",
+        "row": 3,
+        "column": 3
+      },
+      "speedKmh": 120.73,
+      "countBefore": {
+        "balls": 0,
+        "strikes": 1
+      },
+      "plateAppearanceEnded": true,
+      "plateAppearanceResult": "IN_PLAY",
+      "prev1": "Normal/STRIKE/STRIKE",
+      "prev2": null,
+      "battedBall": {"localX":0.5957,"localZ":3.1721,"distance":3.2275,"sprayAngleDeg":10.6364,"launchAngleDeg":-38.2193,"exitSpeedKmh":174.3546,"contact":{"offsetForward":0.0585,"offsetRight":0.0062,"offsetUp":-0.1861,"offsetDistance":0.1952,"normalizedDistance":0.1627,"quality":"SWEET"},"method":"estimated"}
+    },
+    {
+      "pitchNo": 3,
+      "at": "2026-05-11-00:35:05",
+      "outcome": "IN_PLAY",
+      "ballType": "Normal",
+      "ballName": "ファストボール",
+      "zone": {
+        "label": "CENTER",
+        "row": 2,
+        "column": 4
+      },
+      "speedKmh": 120.51,
+      "countBefore": {
+        "balls": 0,
+        "strikes": 0
+      },
+      "plateAppearanceEnded": true,
+      "plateAppearanceResult": "IN_PLAY",
+      "prev1": "Normal/STRIKE/IN_PLAY",
+      "prev2": "Normal/STRIKE/STRIKE",
+      "battedBall": {"localX":-53.8625,"localZ":85.5580,"distance":101.1007,"sprayAngleDeg":-32.1922,"launchAngleDeg":39.4159,"exitSpeedKmh":160.9196,"contact":{"offsetForward":0.0525,"offsetRight":-0.2760,"offsetUp":0.2201,"offsetDistance":0.3569,"normalizedDistance":0.2974,"quality":"SWEET"},"method":"estimated"}
+    },
+    {
+      "pitchNo": 4,
+      "at": "2026-05-11-00:35:08",
+      "outcome": "IN_PLAY",
+      "ballType": "Normal",
+      "ballName": "ファストボール",
+      "zone": {
+        "label": "STRIKE",
+        "row": 1,
+        "column": 5
+      },
+      "speedKmh": 120.16,
+      "countBefore": {
+        "balls": 0,
+        "strikes": 0
+      },
+      "plateAppearanceEnded": true,
+      "plateAppearanceResult": "IN_PLAY",
+      "prev1": "Normal/CENTER/IN_PLAY",
+      "prev2": "Normal/STRIKE/IN_PLAY",
+      "battedBall": {"localX":21.1362,"localZ":109.0035,"distance":111.0338,"sprayAngleDeg":10.9737,"launchAngleDeg":10.9119,"exitSpeedKmh":233.6841,"contact":{"offsetForward":0.1791,"offsetRight":0.0120,"offsetUp":0.0297,"offsetDistance":0.1820,"normalizedDistance":0.1516,"quality":"SWEET"},"method":"estimated"}
+    },
+    {
+      "pitchNo": 5,
+      "at": "2026-05-11-00:35:12",
+      "outcome": "IN_PLAY",
+      "ballType": "Normal",
+      "ballName": "ファストボール",
+      "zone": {
+        "label": "CENTER",
+        "row": 2,
+        "column": 4
+      },
+      "speedKmh": 120.47,
+      "countBefore": {
+        "balls": 0,
+        "strikes": 0
+      },
+      "plateAppearanceEnded": true,
+      "plateAppearanceResult": "IN_PLAY",
+      "prev1": "Normal/STRIKE/IN_PLAY",
+      "prev2": "Normal/CENTER/IN_PLAY",
+      "battedBall": {"localX":29.3692,"localZ":58.2031,"distance":65.1932,"sprayAngleDeg":26.7754,"launchAngleDeg":4.4741,"exitSpeedKmh":233.1528,"contact":{"offsetForward":0.1636,"offsetRight":0.0989,"offsetUp":-0.0056,"offsetDistance":0.1913,"normalizedDistance":0.1594,"quality":"SWEET"},"method":"estimated"}
+    },
+    {
+      "pitchNo": 6,
+      "at": "2026-05-11-00:35:16",
+      "outcome": "STRIKE",
+      "ballType": "Normal",
+      "ballName": "ファストボール",
+      "zone": {
+        "label": "STRIKE",
+        "row": 1,
+        "column": 4
+      },
+      "speedKmh": 121.13,
+      "countBefore": {
+        "balls": 0,
+        "strikes": 0
+      },
+      "plateAppearanceEnded": false,
+      "plateAppearanceResult": "CONTINUE",
+      "prev1": "Normal/CENTER/IN_PLAY",
+      "prev2": "Normal/STRIKE/IN_PLAY",
+      "battedBall": null
+    },
+    {
+      "pitchNo": 7,
+      "at": "2026-05-11-00:35:19",
+      "outcome": "IN_PLAY",
+      "ballType": "Normal",
+      "ballName": "ファストボール",
+      "zone": {
+        "label": "STRIKE",
+        "row": 3,
+        "column": 4
+      },
+      "speedKmh": 120.75,
+      "countBefore": {
+        "balls": 0,
+        "strikes": 1
+      },
+      "plateAppearanceEnded": true,
+      "plateAppearanceResult": "IN_PLAY",
+      "prev1": "Normal/STRIKE/STRIKE",
+      "prev2": "Normal/CENTER/IN_PLAY",
+      "battedBall": {"localX":1.2087,"localZ":3.4045,"distance":3.6127,"sprayAngleDeg":19.5468,"launchAngleDeg":-24.0643,"exitSpeedKmh":191.9667,"contact":{"offsetForward":0.1604,"offsetRight":0.1511,"offsetUp":-0.2572,"offsetDistance":0.3387,"normalizedDistance":0.2823,"quality":"SWEET"},"method":"estimated"}
+    },
+    {
+      "pitchNo": 8,
+      "at": "2026-05-11-00:35:23",
+      "outcome": "IN_PLAY",
+      "ballType": "Normal",
+      "ballName": "ファストボール",
+      "zone": {
+        "label": "STRIKE",
+        "row": 2,
+        "column": 5
+      },
+      "speedKmh": 120.40,
+      "countBefore": {
+        "balls": 0,
+        "strikes": 0
+      },
+      "plateAppearanceEnded": true,
+      "plateAppearanceResult": "IN_PLAY",
+      "prev1": "Normal/STRIKE/IN_PLAY",
+      "prev2": "Normal/STRIKE/STRIKE",
+      "battedBall": {"localX":5.1260,"localZ":134.5773,"distance":134.6749,"sprayAngleDeg":2.1813,"launchAngleDeg":16.5524,"exitSpeedKmh":226.7112,"contact":{"offsetForward":0.1624,"offsetRight":-0.0358,"offsetUp":0.0539,"offsetDistance":0.1749,"normalizedDistance":0.1457,"quality":"SWEET"},"method":"estimated"}
+    },
+    {
+      "pitchNo": 9,
+      "at": "2026-05-11-00:35:27",
+      "outcome": "IN_PLAY",
+      "ballType": "Normal",
+      "ballName": "ファストボール",
+      "zone": {
+        "label": "STRIKE",
+        "row": 2,
+        "column": 5
+      },
+      "speedKmh": 120.39,
+      "countBefore": {
+        "balls": 0,
+        "strikes": 0
+      },
+      "plateAppearanceEnded": true,
+      "plateAppearanceResult": "IN_PLAY",
+      "prev1": "Normal/STRIKE/IN_PLAY",
+      "prev2": "Normal/STRIKE/IN_PLAY",
+      "battedBall": {"localX":2.1210,"localZ":93.3944,"distance":93.4185,"sprayAngleDeg":1.3010,"launchAngleDeg":8.9002,"exitSpeedKmh":226.2531,"contact":{"offsetForward":0.1572,"offsetRight":-0.0368,"offsetUp":0.0150,"offsetDistance":0.1621,"normalizedDistance":0.1351,"quality":"SWEET"},"method":"estimated"}
+    },
+    {
+      "pitchNo": 10,
+      "at": "2026-05-11-00:35:30",
+      "outcome": "STRIKE",
+      "ballType": "Normal",
+      "ballName": "ファストボール",
+      "zone": {
+        "label": "STRIKE",
+        "row": 3,
+        "column": 5
+      },
+      "speedKmh": 121.73,
+      "countBefore": {
+        "balls": 0,
+        "strikes": 0
+      },
+      "plateAppearanceEnded": false,
+      "plateAppearanceResult": "CONTINUE",
+      "prev1": "Normal/STRIKE/IN_PLAY",
+      "prev2": "Normal/STRIKE/IN_PLAY",
+      "battedBall": null
+    },
+    {
+      "pitchNo": 11,
+      "at": "2026-05-11-00:35:34",
+      "outcome": "STRIKE",
+      "ballType": "Normal",
+      "ballName": "ファストボール",
+      "zone": {
+        "label": "STRIKE",
+        "row": 1,
+        "column": 4
+      },
+      "speedKmh": 121.11,
+      "countBefore": {
+        "balls": 0,
+        "strikes": 1
+      },
+      "plateAppearanceEnded": false,
+      "plateAppearanceResult": "CONTINUE",
+      "prev1": "Normal/STRIKE/STRIKE",
+      "prev2": "Normal/STRIKE/IN_PLAY",
+      "battedBall": null
+    },
+    {
+      "pitchNo": 12,
+      "at": "2026-05-11-00:35:38",
+      "outcome": "IN_PLAY",
+      "ballType": "Normal",
+      "ballName": "ファストボール",
+      "zone": {
+        "label": "CENTER",
+        "row": 2,
+        "column": 4
+      },
+      "speedKmh": 120.46,
+      "countBefore": {
+        "balls": 0,
+        "strikes": 2
+      },
+      "plateAppearanceEnded": true,
+      "plateAppearanceResult": "IN_PLAY",
+      "prev1": "Normal/STRIKE/STRIKE",
+      "prev2": "Normal/STRIKE/STRIKE",
+      "battedBall": {"localX":62.5732,"localZ":128.6498,"distance":143.0601,"sprayAngleDeg":25.9376,"launchAngleDeg":16.6741,"exitSpeedKmh":235.4824,"contact":{"offsetForward":0.1497,"offsetRight":0.0821,"offsetUp":0.0597,"offsetDistance":0.1808,"normalizedDistance":0.1507,"quality":"SWEET"},"method":"estimated"}
+    },
+    {
+      "pitchNo": 13,
+      "at": "2026-05-11-00:35:42",
+      "outcome": "IN_PLAY",
+      "ballType": "Normal",
+      "ballName": "ファストボール",
+      "zone": {
+        "label": "STRIKE",
+        "row": 2,
+        "column": 5
+      },
+      "speedKmh": 120.48,
+      "countBefore": {
+        "balls": 0,
+        "strikes": 0
+      },
+      "plateAppearanceEnded": true,
+      "plateAppearanceResult": "IN_PLAY",
+      "prev1": "Normal/CENTER/IN_PLAY",
+      "prev2": "Normal/STRIKE/STRIKE",
+      "battedBall": {"localX":35.9247,"localZ":151.5709,"distance":155.7701,"sprayAngleDeg":13.3339,"launchAngleDeg":33.1162,"exitSpeedKmh":214.5896,"contact":{"offsetForward":0.2458,"offsetRight":0.0238,"offsetUp":0.2662,"offsetDistance":0.3631,"normalizedDistance":0.3026,"quality":"SWEET"},"method":"estimated"}
+    },
+    {
+      "pitchNo": 14,
+      "at": "2026-05-11-00:35:46",
+      "outcome": "IN_PLAY",
+      "ballType": "Normal",
+      "ballName": "ファストボール",
+      "zone": {
+        "label": "STRIKE",
+        "row": 1,
+        "column": 4
+      },
+      "speedKmh": 120.17,
+      "countBefore": {
+        "balls": 0,
+        "strikes": 0
+      },
+      "plateAppearanceEnded": true,
+      "plateAppearanceResult": "IN_PLAY",
+      "prev1": "Normal/STRIKE/IN_PLAY",
+      "prev2": "Normal/CENTER/IN_PLAY",
+      "battedBall": {"localX":64.1192,"localZ":118.4639,"distance":134.7032,"sprayAngleDeg":28.4247,"launchAngleDeg":36.2451,"exitSpeedKmh":193.8402,"contact":{"offsetForward":0.3200,"offsetRight":0.2645,"offsetUp":0.5400,"offsetDistance":0.6811,"normalizedDistance":0.5676,"quality":"SOLID"},"method":"estimated"}
+    }
+  ]
+}
+}
