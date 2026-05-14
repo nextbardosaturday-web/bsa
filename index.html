@@ -7,14 +7,473 @@
 <style>
 :root{--navy:#071d49;--blue:#0067b1;--red:#c8102e;--bg:#f3f5f8;--line:#d9dee8;--text:#1f2937;--muted:#64748b;--green:#16a34a;--yellow:#facc15;--orange:#fb923c;--barrel:#ef4444;--card:#fff}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif}.topbar{background:var(--navy);color:#fff;border-bottom:4px solid var(--red)}.topbar-inner{max-width:1440px;margin:auto;display:flex;gap:22px;align-items:center;padding:12px 20px}.brand{font-size:22px;font-weight:800}.brand small{display:block;font-size:12px;color:#bfd7ff;font-weight:500}.nav{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}.nav button,.toolbar button,.tab button{border:1px solid var(--line);background:#e9eef6;color:var(--navy);border-radius:3px;padding:8px 12px;font-weight:700;cursor:pointer}.nav button{background:#123366;color:#fff;border-color:rgba(255,255,255,.25)}.nav button.active,.tab button.active{background:var(--red);color:#fff;border-color:var(--red)}main{max-width:1440px;margin:auto;padding:18px}.view{display:none}.view.active{display:block}.arch{display:grid;grid-template-columns:1fr 1fr;gap:10px}.archBox{border:1px solid var(--line);background:#f8fafc;border-radius:4px;padding:12px}.archTitle{font-size:12px;color:var(--muted);font-weight:900}.archValue{font-size:20px;color:var(--navy);font-weight:900;margin-top:4px}.tierS{color:#b91c1c;font-weight:900}.tierA{color:#c2410c;font-weight:900}.tierB{color:#1d4ed8;font-weight:900}.tierC{color:#475569;font-weight:900}.hero,.playerHeader,.toolbar,.card,.kpi,.homeCard{background:#fff;border:1px solid var(--line);border-radius:4px;box-shadow:0 1px 2px rgba(0,0,0,.04)}.hero{padding:18px 20px;background:linear-gradient(90deg,#fff,#eef4fb);display:flex;justify-content:space-between;align-items:center}.hero h1{margin:0;color:var(--navy);font-size:30px}.hero p,.note,.playerSub{color:var(--muted)}.homeCards{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:18px}.homeCard{padding:22px;cursor:pointer}.homeCard:hover{border-color:var(--blue);box-shadow:0 3px 10px rgba(0,0,0,.09)}.homeCard h2{margin:0 0 8px;color:var(--navy)}.toolbar{padding:12px;margin:14px 0;display:flex;gap:10px;flex-wrap:wrap;align-items:center}.toolbar input,.toolbar select{border:1px solid var(--line);padding:8px;border-radius:3px;background:#fff}.toolbar button{background:var(--blue);color:#fff;border-color:var(--blue)}.toolbar button.secondary{background:#fff;color:var(--blue)}.playerHeader{padding:14px 16px;display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:12px}.playerName{font-size:28px;color:var(--navy);font-weight:800}.kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin:12px 0}.kpi{padding:12px;min-height:74px}.kpi .label{color:var(--muted);font-size:12px;text-transform:uppercase;font-weight:700}.kpi .value{color:var(--navy);font-size:26px;font-weight:800;margin-top:4px}.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}.card{padding:12px}.card h2{margin:0 0 10px;color:var(--navy);font-size:18px;border-bottom:1px solid var(--line);padding-bottom:8px}.card h3{margin:12px 0 8px;color:var(--navy);font-size:15px}.span5{grid-column:span 5}.span6{grid-column:span 6}.span7{grid-column:span 7}.span12{grid-column:span 12}canvas{width:100%;background:#fff;border:1px solid var(--line);border-radius:3px}#spray{aspect-ratio:1.18/1}#sprayDistribution{aspect-ratio:3.25/1}#zoneMap{aspect-ratio:1/1}#evla,#contact{aspect-ratio:1.55/1}.tab{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}.sessionTabs{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0}.sessionTabs button{border:1px solid var(--line);background:#fff;color:var(--navy);border-radius:3px;padding:6px 10px;cursor:pointer}.sessionTabs button.active{background:var(--navy);color:#fff}.legend{display:flex;gap:12px;flex-wrap:wrap;color:var(--muted);font-size:12px;margin-top:8px}.dot{width:11px;height:11px;border-radius:50%;display:inline-block;margin-right:4px;vertical-align:-1px}.note{font-size:12px;line-height:1.5;margin-top:8px}table{width:100%;border-collapse:collapse;font-size:13px}th,td{border-bottom:1px solid var(--line);padding:7px 8px;text-align:right}th:first-child,td:first-child{text-align:left}thead th{background:#eef2f7;color:var(--navy);font-weight:800;position:sticky;top:0}tbody tr:hover td{background:#f8fafc}.result-strike td{background:rgba(250,204,21,.12)}.result-foul td{background:rgba(251,146,60,.12)}.result-ball td{background:rgba(22,163,74,.10)}.result-inplay td{background:rgba(59,130,246,.10)}.badge{display:inline-block;border-radius:999px;padding:3px 8px;font-size:12px;font-weight:800}.badgeBarrel{background:#ef4444;color:#fff}.badgeHH{background:#fb923c;color:#111827}.err{display:none;background:#fff1f2;color:#991b1b;border:1px solid #fecdd3;padding:12px;border-radius:4px;margin:12px 0;white-space:pre-wrap}.status{display:none;background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe;padding:10px;border-radius:4px;margin:12px 0}@media(max-width:1100px){.homeCards{grid-template-columns:1fr}.kpis{grid-template-columns:repeat(2,1fr)}.span5,.span6,.span7{grid-column:span 12}.topbar-inner{align-items:flex-start;flex-direction:column}.nav{margin-left:0}}
+
+/* ===== Layout stabilization patch ===== */
+.player-layout{
+  display:grid;
+  grid-template-columns:minmax(0, 1.35fr) minmax(360px, .65fr);
+  gap:14px;
+  align-items:start;
+}
+.player-main,
+.player-side{
+  display:grid;
+  gap:14px;
+  min-width:0;
+}
+.full-row{
+  grid-column:1 / -1;
+}
+.card{
+  min-width:0;
+  overflow:hidden;
+}
+.card canvas{
+  display:block;
+  max-width:100%;
+}
+#spray{
+  aspect-ratio:1.20 / 1;
+}
+#sprayDistribution{
+  aspect-ratio:3.3 / 1;
+}
+#zoneMap{
+  aspect-ratio:1 / 1;
+  max-height:650px;
+}
+#evla,
+#contact{
+  aspect-ratio:1.55 / 1;
+}
+.tableWrap{
+  overflow:auto;
+  width:100%;
+}
+.tableTall{
+  max-height:520px;
+}
+.player-side .card h2,
+.player-main .card h2{
+  line-height:1.25;
+}
+@media(max-width:1180px){
+  .player-layout{
+    grid-template-columns:1fr;
+  }
+  .full-row{
+    grid-column:auto;
+  }
+}
+
+
+.overall-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+}
+.overall-grid .wide{
+  grid-column:1 / -1;
+}
+@media(max-width:1180px){
+  .overall-grid{
+    grid-template-columns:1fr;
+  }
+  .overall-grid .wide{
+    grid-column:auto;
+  }
+}
+
+
+/* ===== Sidebar width fix ===== */
+.player-layout{
+  grid-template-columns:minmax(0,1fr) 420px !important;
+}
+
+.player-side{
+  width:420px;
+  min-width:420px;
+  max-width:420px;
+}
+
+.player-side .card{
+  width:100%;
+}
+
+#sequenceTable{
+  table-layout:fixed;
+  width:100%;
+  font-size:12px;
+}
+
+#sequenceTable th,
+#sequenceTable td{
+  word-break:break-word;
+  white-space:normal;
+  padding:6px 5px;
+}
+
+#sequenceTable th:nth-child(1),
+#sequenceTable td:nth-child(1){
+  width:46%;
+}
+
+#sequenceTable th:nth-child(n+2),
+#sequenceTable td:nth-child(n+2){
+  width:13.5%;
+  text-align:right;
+}
+
+.arch{
+  grid-template-columns:1fr 1fr;
+}
+
+.archValue{
+  font-size:18px;
+  line-height:1.25;
+}
+
+@media(max-width:1180px){
+  .player-layout{
+    grid-template-columns:1fr !important;
+  }
+
+  .player-side{
+    width:auto;
+    min-width:0;
+    max-width:none;
+  }
+}
+
+
+/* ===== HARD PLAYER LAYOUT RESET v3 ===== */
+#playerView .grid,
+#playerView .player-layout,
+#playerView .player-side,
+#playerView .player-main{
+  display:initial !important;
+  width:auto !important;
+  min-width:0 !important;
+  max-width:none !important;
+}
+
+.player-layout-fixed{
+  display:grid !important;
+  grid-template-columns:minmax(0, 1fr) 460px !important;
+  gap:16px !important;
+  align-items:start !important;
+  width:100% !important;
+}
+
+.player-main-fixed{
+  display:grid !important;
+  grid-template-columns:1fr !important;
+  gap:16px !important;
+  min-width:0 !important;
+}
+
+.player-sidebar-fixed{
+  display:flex !important;
+  flex-direction:column !important;
+  gap:16px !important;
+  width:460px !important;
+  min-width:460px !important;
+  max-width:460px !important;
+}
+
+.player-sidebar-fixed .card{
+  width:100% !important;
+  min-width:0 !important;
+}
+
+.below-player-fixed{
+  display:grid !important;
+  grid-template-columns:1fr !important;
+  gap:16px !important;
+  margin-top:16px !important;
+}
+
+.two-chart-grid{
+  display:grid !important;
+  grid-template-columns:1fr 1fr !important;
+  gap:16px !important;
+}
+
+.two-chart-grid h2{
+  margin-top:0 !important;
+}
+
+.zone-tabs-fixed{
+  gap:5px !important;
+}
+
+.zone-tabs-fixed button{
+  padding:6px 8px !important;
+  font-size:12px !important;
+}
+
+.sequenceWrap{
+  max-height:360px !important;
+  overflow:auto !important;
+}
+
+#sequenceTable{
+  width:100% !important;
+  table-layout:fixed !important;
+  font-size:12px !important;
+}
+
+#sequenceTable th,
+#sequenceTable td{
+  white-space:normal !important;
+  word-break:break-word !important;
+  padding:6px 5px !important;
+}
+
+#sequenceTable th:first-child,
+#sequenceTable td:first-child{
+  width:48% !important;
+  text-align:left !important;
+}
+
+#sequenceTable th:not(:first-child),
+#sequenceTable td:not(:first-child){
+  width:13% !important;
+  text-align:right !important;
+}
+
+#archetypeBox.arch{
+  display:grid !important;
+  grid-template-columns:1fr 1fr !important;
+  gap:10px !important;
+}
+
+#archetypeBox .archValue{
+  font-size:18px !important;
+  line-height:1.25 !important;
+}
+
+#spray{
+  aspect-ratio:1.20 / 1 !important;
+}
+
+#sprayDistribution{
+  aspect-ratio:3.33 / 1 !important;
+}
+
+#zoneMap{
+  aspect-ratio:1 / 1 !important;
+}
+
+#evla,
+#contact{
+  aspect-ratio:1.55 / 1 !important;
+}
+
+@media(max-width:1250px){
+  .player-layout-fixed{
+    grid-template-columns:1fr !important;
+  }
+  .player-sidebar-fixed{
+    width:100% !important;
+    min-width:0 !important;
+    max-width:none !important;
+  }
+}
+
+@media(max-width:900px){
+  .two-chart-grid{
+    grid-template-columns:1fr !important;
+  }
+}
+
+
+/* ===== Top summary / no launch-contact charts ===== */
+.archetypeKpis{
+  margin-top:-2px;
+}
+.archetypeKpis .kpi{
+  background:#fff;
+  border-left:4px solid var(--red);
+}
+@media(min-width:1200px){
+  #playerView .kpis{
+    grid-template-columns:repeat(6,1fr);
+  }
+}
+
+
+/* ===== Sequence below layout ===== */
+.sequenceWrap{
+  max-height:320px !important;
+  overflow:auto !important;
+}
+
+#sequenceTable{
+  width:100% !important;
+  table-layout:auto !important;
+  font-size:12px !important;
+}
+
+#sequenceTable th:first-child,
+#sequenceTable td:first-child{
+  width:auto !important;
+}
+
+#sequenceTable td{
+  white-space:nowrap;
+}
+
+
+/* ===== Equal Spray / Zone ratio ===== */
+.player-layout-fixed{
+  grid-template-columns:1fr 1fr !important;
+  align-items:start !important;
+}
+
+.player-main-fixed,
+.player-sidebar-fixed{
+  width:100% !important;
+  min-width:0 !important;
+  max-width:none !important;
+}
+
+.player-sidebar-fixed{
+  display:flex !important;
+  flex-direction:column !important;
+  gap:16px !important;
+}
+
+#spray,
+#zoneMap{
+  aspect-ratio:1 / 1 !important;
+}
+
+#sprayDistribution{
+  aspect-ratio:3.3 / 1 !important;
+}
+
+@media(max-width:1100px){
+  .player-layout-fixed{
+    grid-template-columns:1fr !important;
+  }
+}
+
+
+/* ===== Overall layout hard fix ===== */
+#overallView .overall-grid,
+#overallView .grid{
+  display:grid !important;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr) !important;
+  gap:16px !important;
+  align-items:start !important;
+  width:100% !important;
+}
+
+#overallView .overall-grid > .card,
+#overallView .grid > .card{
+  width:100% !important;
+  min-width:0 !important;
+  max-width:none !important;
+  display:block !important;
+}
+
+#overallView .overall-grid > .wide,
+#overallView .grid > .span12,
+#overallView .grid > .wide{
+  grid-column:1 / -1 !important;
+}
+
+#overallView .grid > .span6{
+  grid-column:auto !important;
+}
+
+#overallView table{
+  width:100% !important;
+}
+
+#overallRankCard.single-player-hidden{
+  display:none !important;
+}
+
+@media(max-width:1100px){
+  #overallView .overall-grid,
+  #overallView .grid{
+    grid-template-columns:1fr !important;
+  }
+
+  #overallView .overall-grid > .wide,
+  #overallView .grid > .span12,
+  #overallView .grid > .wide{
+    grid-column:auto !important;
+  }
+}
+
 </style>
 </head>
 <body>
 <header class="topbar"><div class="topbar-inner"><div class="brand">Batting Session Analyzer<small>Statcast-style Minecraft Baseball Dashboard</small></div><nav class="nav"><button id="navHome">Home</button><button id="navPlayer">Player</button><button id="navOverall">Overall</button></nav></div></header>
 <main><div id="paramStatus" class="status"></div><div id="error" class="err"></div>
 <section id="homeView" class="view active"><div class="hero"><div><h1>Batting Session Analyzer</h1><p>Baseball Savant風に、打球・ゾーン・球種別の傾向を分析します。</p></div></div><div class="homeCards"><div class="homeCard" onclick="showView('player')"><h2>プレイヤー単位</h2><p>個別プレイヤーのセッション、Spray Chart、Zone Map、打球品質、詳細テーブルを確認します。</p></div><div class="homeCard" onclick="showView('overall')"><h2>全体統計</h2><p>playersフォルダ全体のデータを集計し、難しい球種・コース・組み合わせを確認します。</p></div></div></section>
-<section id="playerView" class="view"><div class="toolbar"><strong>Player Mode</strong><input id="fileInput" type="file" multiple accept=".md,.json,.txt,application/json,text/markdown,text/plain"><select id="playerSelect" style="display:none"></select><button class="secondary" onclick="showView('home')">戻る</button><button class="secondary" onclick="downloadCSV()" id="csvBtn" disabled>CSV出力</button><span class="note">手動ファイル / ?url= / ?data= / ?manifest= / ?player= に対応</span></div><div class="playerHeader"><div><div class="playerName" id="playerName">No Data</div><div class="playerSub" id="playerSub">データを読み込んでください。</div></div><div class="playerSub" id="playerSource"></div></div><div id="sessionTabs" class="sessionTabs"></div><div id="kpis" class="kpis"></div><div class="grid"><div class="card span7"><h2>Spray Chart / 打球地点</h2><div class="tab"><button id="sprayModePoints" onclick="setSprayMode('points')">Points</button><button id="sprayModeHeat" onclick="setSprayMode('heat')">Heatmap</button></div><canvas id="spray" width="850" height="720"></canvas><h3>Spray Distribution / 打球方向分布</h3><canvas id="sprayDistribution" width="850" height="260"></canvas><div class="legend"><span><i class="dot" style="background:#ef4444"></i>Barrel</span><span><i class="dot" style="background:#fb923c"></i>Hard Hit</span><span><i class="dot" style="background:#22c55e"></i>SWEET</span><span><i class="dot" style="background:#facc15"></i>SOLID</span></div></div><div class="card span5"><h2>Zone Map / 強弱</h2><div class="tab"><button id="zoneScore" onclick="setZoneMetric('score')">Score</button><button id="zoneHard" onclick="setZoneMetric('hard')">HardHit%</button><button id="zoneBarrel" onclick="setZoneMetric('barrel')">Barrel%</button><button id="zoneWhiff" onclick="setZoneMetric('whiff')">Whiff%</button><button id="zoneEv" onclick="setZoneMetric('ev')">Avg EV</button></div><canvas id="zoneMap" width="650" height="650"></canvas><div class="note">Zone表記: A〜E × 1〜5。例: A1=左上、C3=中央。色は母数でなく強さ/弱さ。</div></div><div class="card span6"><h2>Launch Chart / Barrel判定</h2><canvas id="evla" width="760" height="490"></canvas></div><div class="card span6"><h2>Contact / Timing Map</h2><div class="tab"><button id="contactTab" onclick="setContactMode('contact')">芯とのズレ</button><button id="timingTab" onclick="setContactMode('timing')">タイミング</button></div><canvas id="contact" width="760" height="490"></canvas><div class="note" id="contactNote">中心ほど芯に近い。横=offsetRight、縦=offsetUp。</div></div><div class="card span4"><h2>Batter Archetype</h2><div id="archetypeBox" class="arch"></div></div><div class="card span8"><h2>Pitch Sequence / 前球→現在球</h2><div style="overflow:auto;max-height:330px"><table id="sequenceTable"></table></div></div><div class="card span12"><h2>Ball Type Stats / 球種別成績</h2><div style="overflow:auto"><table id="ballTypeTable"></table></div></div><div class="card span12"><h2>Pitch Details</h2><div style="overflow:auto;max-height:520px"><table id="pitchTable"></table></div></div></div></section>
-<section id="overallView" class="view"><div class="toolbar"><strong>Overall Mode</strong><button class="secondary" onclick="showView('home')">戻る</button><button onclick="loadOverallFromManifest()">manifestから再読込</button><span class="note">players / sessions 全体を集計。detailsや分布系は省略。</span></div><div class="hero"><div><h1>Overall Statcast Summary</h1><p>プレイヤー全体で、難しい球種・コースを確認します。</p></div></div><div id="overallKpis" class="kpis"></div><div class="grid"><div class="card span12"><h2>Player Rank / Tier</h2><div style="overflow:auto"><table id="rankTable"></table></div></div><div class="card span6"><h2>Overall Ball Type Difficulty / 球種別</h2><div style="overflow:auto"><table id="overallBallTypeTable"></table></div></div><div class="card span6"><h2>Overall Zone Difficulty / コース別</h2><div style="overflow:auto"><table id="overallZoneTable"></table></div></div><div class="card span12"><h2>Pitch Type × Zone Difficulty / 球種×コース</h2><div style="overflow:auto;max-height:560px"><table id="overallComboTable"></table></div></div></div></section></main>
+<section id="playerView" class="view"><div class="toolbar"><strong>Player Mode</strong><input id="fileInput" type="file" multiple accept=".md,.json,.txt,application/json,text/markdown,text/plain"><select id="playerSelect" style="display:none"></select><button class="secondary" onclick="showView('home')">戻る</button><button class="secondary" onclick="downloadCSV()" id="csvBtn" disabled>CSV出力</button><span class="note">手動ファイル / ?url= / ?data= / ?manifest= / ?player= に対応（?playerはmanifestからsessionsを取得）</span></div><div class="playerHeader"><div><div class="playerName" id="playerName">No Data</div><div class="playerSub" id="playerSub">データを読み込んでください。</div></div><div class="playerSub" id="playerSource"></div></div><div id="sessionTabs" class="sessionTabs"></div>
+  <div id="kpis" class="kpis"></div>
+  <div id="archetypeKpis" class="kpis archetypeKpis"></div>
+
+  <div class="player-layout-fixed">
+    <div class="player-main-fixed">
+      <div class="card">
+        <h2>Spray Chart / 打球地点</h2>
+        <div class="tab">
+          <button id="sprayModePoints" onclick="setSprayMode('points')">Points</button>
+          <button id="sprayModeHeat" onclick="setSprayMode('heat')">Heatmap</button>
+        </div>
+        <canvas id="spray" width="900" height="750"></canvas>
+        <h3 style="margin-top:12px">Spray Distribution / 打球方向分布</h3>
+        <canvas id="sprayDistribution" width="900" height="270"></canvas>
+        <div class="legend">
+          <span><i class="dot" style="background:#ef4444"></i>Barrel</span>
+          <span><i class="dot" style="background:#fb923c"></i>Hard Hit</span>
+          <span><i class="dot" style="background:#22c55e"></i>SWEET</span>
+          <span><i class="dot" style="background:#facc15"></i>SOLID</span>
+        </div>
+      </div>
+    </div>
+
+    <aside class="player-sidebar-fixed">
+      <div class="card">
+        <h2>Zone Map / 強弱</h2>
+        <div class="tab zone-tabs-fixed">
+          <button onclick="setZoneMetric('score')" id="zoneScore">Score</button>
+          <button onclick="setZoneMetric('hard')" id="zoneHard">HardHit%</button>
+          <button onclick="setZoneMetric('barrel')" id="zoneBarrel">Barrel%</button>
+          <button onclick="setZoneMetric('whiff')" id="zoneWhiff">Whiff%</button>
+          <button onclick="setZoneMetric('ev')" id="zoneEv">Avg EV</button>
+        </div>
+        <canvas id="zoneMap" width="650" height="650"></canvas>
+        <div class="note">Zone表記: A〜E × 1〜5。例: A1=左上、C3=中央。</div>
+      </div>
+
+    </aside>
+  </div>
+
+  <div class="below-player-fixed">
+    <div class="card">
+      <h2>Pitch Sequence / 前球→現在球</h2>
+      <div class="tableWrap sequenceWrap"><table id="sequenceTable"></table></div>
+    </div>
+
+    <div class="card">
+      <h2>Ball Type Stats / 球種別成績</h2>
+      <div class="tableWrap"><table id="ballTypeTable"></table></div>
+    </div>
+
+    <div class="card">
+      <h2>Pitch Details</h2>
+      <div class="tableWrap tableTall"><table id="pitchTable"></table></div>
+    </div>
+  </div>
+</section>
+<section id="overallView" class="view"><div class="toolbar"><strong>Overall Mode</strong><button class="secondary" onclick="showView('home')">戻る</button><button onclick="loadOverallFromManifest()">manifestから再読込</button><span class="note">players / sessions 全体を集計。detailsや分布系は省略。</span></div><div class="hero"><div><h1>Overall Statcast Summary</h1><p>プレイヤー全体で、難しい球種・コースを確認します。</p></div></div><div id="overallKpis" class="kpis"></div><div class="grid"><div class="card wide" id="overallRankCard"><h2>Player Rank / Tier</h2><div style="overflow:auto"><table id="rankTable"></table></div></div><div class="card"><h2>Overall Ball Type Difficulty / 球種別</h2><div style="overflow:auto"><table id="overallBallTypeTable"></table></div></div><div class="card"><h2>Overall Zone Difficulty / コース別</h2><div style="overflow:auto"><table id="overallZoneTable"></table></div></div><div class="card wide"><h2>Pitch Type × Zone Difficulty / 球種×コース</h2><div style="overflow:auto;max-height:560px"><table id="overallComboTable"></table></div></div></div></section></main>
 <script>
 let currentData=null,baseData=null,playerDatas=[],currentZoneMetric='score',currentSprayMode='auto',currentContactMode='contact',currentSessionKey='ALL',currentManifestUrl=null;
 navHome.onclick=()=>showView('home');navPlayer.onclick=()=>showView('player');navOverall.onclick=()=>showView('overall');fileInput.addEventListener('change',handleFiles);playerSelect.addEventListener('change',()=>{const i=Number(playerSelect.value);if(playerDatas[i])loadPlayerDataObject(playerDatas[i].data,playerDatas[i].label)});document.addEventListener('DOMContentLoaded',autoLoadFromParams);
@@ -22,11 +481,19 @@ function showView(view){for(const id of ['homeView','playerView','overallView'])
 async function handleFiles(e){const files=[...e.target.files];if(!files.length)return;try{const parsed=[];for(const file of files){parsed.push({name:file.name,data:normalizeLoadedData(parseInput(await file.text()),file.name)})}loadPlayerDataObject(parsed.length===1?parsed[0].data:mergeMany(parsed.map(x=>x.data),'Manual Merged'),parsed.length===1?parsed[0].name:'Manual multi files');showView('player')}catch(err){showError('ファイル読み込み失敗\n'+(err?.message||String(err)))}}
 async function autoLoadFromParams(){const p=new URLSearchParams(location.search),view=p.get('view'),url=p.get('url'),dataParam=p.get('data'),manifest=p.get('manifest'),player=p.get('player');try{if(manifest){currentManifestUrl=manifest;await loadManifest(manifest,player);showView(view==='overall'?'overall':'player');return}if(player){const text=await fetchTextWithRetry('./players/'+encodeURIComponent(player)+'.json',20,3000);loadPlayerDataObject(normalizeLoadedData(parseInput(text),player),player);showView('player');return}if(url){showParamStatus('URLパラメータから読み込み中...');const text=await fetchTextWithRetry(url,20,3000);loadPlayerDataObject(normalizeLoadedData(parseInput(text),url),url);showView(view==='overall'?'overall':'player');return}if(dataParam){loadPlayerDataObject(normalizeLoadedData(parseInput(decodeBase64Url(dataParam)),'data parameter'),'data parameter');showView(view==='overall'?'overall':'player');return}showView(view==='overall'?'overall':view==='player'?'player':'home')}catch(err){showError('パラメータ読み込みに失敗しました。\n'+(err?.message||String(err)))}}
 async function loadManifest(manifestUrl,selectedPlayer){showParamStatus('manifest読み込み中...');const manifest=JSON.parse(await fetchTextWithRetry(manifestUrl,20,3000)),baseUrl=manifestUrl.substring(0,manifestUrl.lastIndexOf('/')+1),rootUrl=baseUrl.replace(/data\/$/,'');const byPlayer=new Map();for(const s of manifest.sessions||[]){if(selectedPlayer&&s.playerName!==selectedPlayer)continue;const obj=normalizeLoadedData(parseInput(await fetchTextWithRetry(rootUrl+s.path,20,1500)),s.path);const data=obj.sessionData?normalizeLoadedData(obj.sessionData,s.path):obj;const key=s.playerName||data.player?.name||'Unknown';if(!byPlayer.has(key))byPlayer.set(key,[]);byPlayer.get(key).push(data)}playerDatas=[...byPlayer.entries()].map(([label,list])=>({label,data:mergeMany(list,label)}));buildPlayerSelect();if(playerDatas.length)loadPlayerDataObject(playerDatas[0].data,playerDatas[0].label);baseData=mergeMany(playerDatas.map(x=>x.data),'Overall');renderOverall(baseData);showParamStatus('manifest読み込み完了')}
-function buildPlayerSelect(){playerSelect.innerHTML='';playerDatas.forEach((p,i)=>{const o=document.createElement('option');o.value=i;o.textContent=p.label;playerSelect.appendChild(o)});playerSelect.style.display=playerDatas.length>1?'':'none'}async function loadOverallFromManifest(){if(currentManifestUrl)await loadManifest(currentManifestUrl);else if(baseData)renderOverall(baseData)}
+function buildPlayerSelect(){playerSelect.innerHTML='';playerDatas.forEach((p,i)=>{const o=document.createElement('option');o.value=i;o.textContent=p.label;playerSelect.appendChild(o)});playerSelect.style.display=playerDatas.length>1?'':'none'}async function loadOverallLatest(show=true){
+  const text=await fetchTextWithRetry(DEFAULT_LATEST);
+  overallData=normalizeLoadedData(parseInput(text),"latest");
+  renderOverall(overallData);
+  hideParamStatus();
+  if(show)showView("overall");
+}
+
+async function loadOverallFromManifest(){if(currentManifestUrl)await loadManifest(currentManifestUrl);else if(baseData)renderOverall(baseData)}
 function parseInput(text){if(!text||!text.trim())throw Error('空ファイルです');const a=[];for(const f of text.matchAll(/```(?:json)?\s*([\s\S]*?)```/gi))a.push(f[1].trim());a.push(text.trim());const first=text.indexOf('{'),last=text.lastIndexOf('}');if(first>=0&&last>first)a.push(text.slice(first,last+1));let lastErr=null;for(const s of a){try{return JSON.parse(s)}catch(e){lastErr=e}}throw lastErr||Error('JSON解析失敗')}
 function normalizeLoadedData(data,label){if(data.sessionData)data=data.sessionData;if(!data.player)data.player={name:label||'Unknown'};if(!data.session)data.session={id:label||'session'};if(!Array.isArray(data.pitches))data.pitches=[];data.pitches.forEach((p,i)=>{if(!p.pitchNo)p.pitchNo=i+1;if(p.zone){const r=Number(p.zone.row),c=Number(p.zone.column);p.zone.displayRow=Number.isFinite(r)?r:null;p.zone.displayColumn=Number.isFinite(c)?c:null;p.zone.code=zoneCode(p.zone.displayRow,p.zone.displayColumn)}p.sourceSession=p.sourceSession||data.session.id||label||'session';p.sourcePlayer=p.sourcePlayer||data.player.name||'Unknown'});return data}
 function mergeMany(datas,name){const m={player:{name:name||'Merged'},session:{id:'MERGED',type:'MERGED'},pitches:[]};let no=1;for(const d of datas)for(const p of d.pitches||[]){const cp=JSON.parse(JSON.stringify(p));cp.originalPitchNo=cp.originalPitchNo||cp.pitchNo;cp.pitchNo=no++;cp.sourceSession=cp.sourceSession||d.session?.id||'session';cp.sourcePlayer=cp.sourcePlayer||d.player?.name||name||'Unknown';m.pitches.push(cp)}return m}
-function loadPlayerDataObject(data,label){baseData=data;currentSessionKey='ALL';currentData=data;renderPlayer(data,label)}function renderPlayer(data,label){currentData=filterSession(data,currentSessionKey);csvBtn.disabled=false;playerName.textContent=data.player?.name||label||'Unknown';playerSub.textContent=`${data.pitches.length} pitches / ${uniqueSessions(data).length} sessions`;playerSource.textContent=label||'';renderSessionTabs(data);renderKPIs(currentData);drawSpray(currentData);drawSprayDistribution(currentData);drawZoneMap(currentData);drawEVLA(currentData);drawContactOrTiming(currentData);renderArchetype(currentData);renderSequence(currentData);renderBallTypeStats(currentData,'ballTypeTable');renderTable(currentData)}
+function loadPlayerDataObject(data,label){baseData=data;currentSessionKey='ALL';currentData=data;renderPlayer(data,label)}function renderPlayer(data,label){currentData=filterSession(data,currentSessionKey);csvBtn.disabled=false;playerName.textContent=data.player?.name||label||'Unknown';playerSub.textContent=`${data.pitches.length} pitches / ${uniqueSessions(data).length} sessions`;playerSource.textContent=label||'';renderSessionTabs(data);renderKPIs(currentData);drawSpray(currentData);drawSprayDistribution(currentData);drawZoneMap(currentData);renderArchetypeKpis(currentData);renderSequence(currentData);renderBallTypeStats(currentData,'ballTypeTable');renderTable(currentData)}
 function uniqueSessions(data){return[...new Set((data.pitches||[]).map(p=>p.sourceSession||data.session?.id||'session'))]}function filterSession(data,key){return key==='ALL'?data:{...data,pitches:data.pitches.filter(p=>(p.sourceSession||data.session?.id)===key)}}function renderSessionTabs(data){sessionTabs.innerHTML='';const mk=(l,k)=>{const b=document.createElement('button');b.textContent=l;b.classList.toggle('active',currentSessionKey===k);b.onclick=()=>{currentSessionKey=k;renderPlayer(baseData,playerSource.textContent)};sessionTabs.appendChild(b)};mk('ALL','ALL');uniqueSessions(data).forEach(s=>mk(s,s))}
 function zoneCode(r,c){const col='ABCDE'[Number(c)-2]??'?';const row=Number.isFinite(Number(r))?Number(r)+1:'?';return col+row}
 function batted(data){return(data.pitches||[]).filter(p=>p.battedBall)}function avg(a){return a.length?a.reduce((x,y)=>x+y,0)/a.length:0}function fmt(n,d=1){return Number.isFinite(Number(n))?Number(n).toFixed(d):'-'}function pct(n,d){return d?((n/d)*100).toFixed(1)+'%':'-'}function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}function kmhToMph(k){return Number(k)/1.609344}function barrelRangeMph(e){if(!Number.isFinite(e)||e<98)return null;if(e>=116)return[8,50];if(e<99)return[26,30];if(e<100)return[25,31];if(e<101)return[24,33];const t=(e-100)/16;return[24+(8-24)*t,33+(50-33)*t]}function isBarrel(bb){const r=barrelRangeMph(kmhToMph(bb?.exitSpeedKmh)),la=Number(bb?.launchAngleDeg);return!!r&&Number.isFinite(la)&&la>=r[0]&&la<=r[1]}function isHardHit(bb){return bb&&kmhToMph(bb.exitSpeedKmh)>=95}function isSwing(p){return p.outcome==='IN_PLAY'||p.outcome==='FOUL'||p.outcome==='STRIKE'}function isWhiff(p){return p.outcome==='STRIKE'&&!p.battedBall}function battedColor(p){const bb=p?.battedBall;if(!bb)return'#3b82f6';if(isBarrel(bb))return'#ef4444';if(isHardHit(bb))return'#fb923c';const q=bb.contact?.quality||'';if(q==='SOLID')return'#facc15';return'#22c55e'}
@@ -41,10 +508,48 @@ function drawZoneMap(data){['score','hard','barrel','whiff','ev'].forEach(k=>doc
 function scatterBase(c,xLabel,yLabel,xmin,xmax,ymin,ymax){const ctx=c.getContext('2d'),p={l:58,r:24,t:24,b:48};ctx.clearRect(0,0,c.width,c.height);ctx.fillStyle='#fff';ctx.fillRect(0,0,c.width,c.height);ctx.strokeStyle='#e2e8f0';for(let i=0;i<=5;i++){const x=p.l+(c.width-p.l-p.r)*i/5,y=p.t+(c.height-p.t-p.b)*i/5;ctx.beginPath();ctx.moveTo(x,p.t);ctx.lineTo(x,c.height-p.b);ctx.stroke();ctx.beginPath();ctx.moveTo(p.l,y);ctx.lineTo(c.width-p.r,y);ctx.stroke()}ctx.strokeStyle='#94a3b8';ctx.strokeRect(p.l,p.t,c.width-p.l-p.r,c.height-p.t-p.b);ctx.fillStyle='#334155';ctx.font='12px Arial';ctx.textAlign='center';ctx.fillText(xLabel,c.width/2,c.height-12);ctx.save();ctx.translate(14,c.height/2);ctx.rotate(-Math.PI/2);ctx.fillText(yLabel,0,0);ctx.restore();return{ctx,p,mapX:x=>p.l+(x-xmin)/(xmax-xmin)*(c.width-p.l-p.r),mapY:y=>c.height-p.b-(y-ymin)/(ymax-ymin)*(c.height-p.t-p.b)}}function drawEVLA(data){const c=evla,s=scatterBase(c,'打球速度 km/h','打球角度 deg',140,260,-45,55),ctx=s.ctx;ctx.beginPath();let started=false,lo=[],hi=[];for(let kmh=98*1.609344;kmh<=260;kmh+=1){const r=barrelRangeMph(kmhToMph(kmh));if(!r)continue;lo.push([s.mapX(kmh),s.mapY(r[0])]);hi.push([s.mapX(kmh),s.mapY(r[1])])}for(const[x,y]of lo){if(!started){ctx.moveTo(x,y);started=true}else ctx.lineTo(x,y)}for(const[x,y]of hi.reverse())ctx.lineTo(x,y);ctx.closePath();ctx.fillStyle='rgba(200,16,46,.10)';ctx.fill();ctx.strokeStyle='#c8102e';ctx.stroke();for(const p of batted(data)){const bb=p.battedBall,ev=Number(bb.exitSpeedKmh),la=Number(bb.launchAngleDeg);if(!Number.isFinite(ev)||!Number.isFinite(la))continue;const x=s.mapX(Math.min(Math.max(ev,140),260)),y=s.mapY(Math.min(Math.max(la,-45),55));ctx.fillStyle=battedColor(p);ctx.beginPath();ctx.arc(x,y,6,0,Math.PI*2);ctx.fill();ctx.fillStyle='#111827';ctx.font='11px Arial';ctx.fillText('#'+p.pitchNo,x+8,y+4)}}
 function setContactMode(m){currentContactMode=m;drawContactOrTiming(currentData)}function drawContactOrTiming(data){contactTab.classList.toggle('active',currentContactMode==='contact');timingTab.classList.toggle('active',currentContactMode==='timing');if(currentContactMode==='timing')drawTiming(data);else drawContact(data)}function drawContact(data){const c=contact,s=scatterBase(c,'offsetRight ←外側 / 内側→','offsetUp 下っ面 / 上っ面',-.4,.4,-.35,.6),ctx=s.ctx,zx=s.mapX(0),zy=s.mapY(0);ctx.strokeStyle='#c8102e';ctx.setLineDash([5,5]);ctx.beginPath();ctx.moveTo(zx,s.p.t);ctx.lineTo(zx,c.height-s.p.b);ctx.stroke();ctx.beginPath();ctx.moveTo(s.p.l,zy);ctx.lineTo(c.width-s.p.r,zy);ctx.stroke();ctx.setLineDash([]);for(const p of batted(data)){const ct=p.battedBall.contact;if(!ct)continue;const x=s.mapX(Math.max(-.4,Math.min(.4,Number(ct.offsetRight)||0))),y=s.mapY(Math.max(-.35,Math.min(.6,Number(ct.offsetUp)||0)));ctx.fillStyle=battedColor(p);ctx.beginPath();ctx.arc(x,y,6,0,Math.PI*2);ctx.fill();ctx.fillStyle='#111827';ctx.font='11px Arial';ctx.fillText('#'+p.pitchNo,x+8,y+4)}}function drawTiming(data){const c=contact,s=scatterBase(c,'offsetForward ←差し込まれ / 前で捉えた→','normalizedDistance',-.35,.35,0,.7),ctx=s.ctx,zx=s.mapX(0);ctx.strokeStyle='#c8102e';ctx.setLineDash([5,5]);ctx.beginPath();ctx.moveTo(zx,s.p.t);ctx.lineTo(zx,c.height-s.p.b);ctx.stroke();ctx.setLineDash([]);for(const p of batted(data)){const ct=p.battedBall.contact;if(!ct)continue;const x=s.mapX(Math.max(-.35,Math.min(.35,Number(ct.offsetForward)||0))),y=s.mapY(Math.max(0,Math.min(.7,Number(ct.normalizedDistance)||0)));ctx.fillStyle=battedColor(p);ctx.beginPath();ctx.arc(x,y,6,0,Math.PI*2);ctx.fill();ctx.fillStyle='#111827';ctx.font='11px Arial';ctx.fillText('#'+p.pitchNo,x+8,y+4)}}
 function groupStats(data,keyFn){const map=new Map();for(const p of data.pitches){const key=keyFn(p);if(!map.has(key))map.set(key,{name:key,pitches:0,swings:0,whiffs:0,balls:0,strikes:0,fouls:0,inplay:0,batted:0,ev:0,evn:0,dist:0,distn:0,barrel:0,hard:0});const g=map.get(key);g.pitches++;if(isSwing(p))g.swings++;if(isWhiff(p))g.whiffs++;if(p.outcome==='BALL')g.balls++;if(p.outcome==='STRIKE')g.strikes++;if(p.outcome==='FOUL')g.fouls++;if(p.outcome==='IN_PLAY')g.inplay++;if(p.battedBall){g.batted++;const ev=Number(p.battedBall.exitSpeedKmh),d=Number(p.battedBall.distance);if(Number.isFinite(ev)){g.ev+=ev;g.evn++}if(Number.isFinite(d)){g.dist+=d;g.distn++}if(isBarrel(p.battedBall))g.barrel++;if(isHardHit(p.battedBall))g.hard++}}return[...map.values()]}function difficulty(g){const wh=g.swings?g.whiffs/g.swings:0,ip=g.pitches?g.inplay/g.pitches:0,ev=g.evn?g.ev/g.evn:0,br=g.batted?g.barrel/g.batted:0;return Math.round(50+35*wh+20*(1-ip)+20*Math.max(0,(180-ev)/180)+25*(1-br))}function renderSequence(data){const pitches=data.pitches,map=new Map();for(let i=1;i<pitches.length;i++){const prev=pitches[i-1],p=pitches[i];if((prev.sourceSession||'')!==(p.sourceSession||''))continue;const key=(prev.ballName||prev.ballType||'Unknown')+' → '+(p.ballName||p.ballType||'Unknown');if(!map.has(key))map.set(key,{name:key,pitches:0,swings:0,whiffs:0,batted:0,barrel:0,hard:0});const g=map.get(key);g.pitches++;if(isSwing(p))g.swings++;if(isWhiff(p))g.whiffs++;if(p.battedBall){g.batted++;if(isBarrel(p.battedBall))g.barrel++;if(isHardHit(p.battedBall))g.hard++}}const rows=[...map.values()].sort((a,b)=>b.pitches-a.pitches).slice(0,20).map(g=>`<tr><td>${esc(g.name)}</td><td>${g.pitches}</td><td>${pct(g.whiffs,g.swings)}</td><td>${pct(g.hard,g.batted)}</td><td>${pct(g.barrel,g.batted)}</td></tr>`).join('');sequenceTable.innerHTML=`<thead><tr><th>Sequence</th><th>投球</th><th>Whiff%</th><th>HH%</th><th>Barrel%</th></tr></thead><tbody>${rows}</tbody>`}
+
+function calcArchetype(data){
+  const bs=batted(data);
+  const sw=data.pitches.filter(isSwing);
+  const ev=avg(bs.map(p=>Number(p.battedBall.exitSpeedKmh)).filter(Number.isFinite));
+  const bar=bs.filter(p=>isBarrel(p.battedBall)).length;
+  const hard=bs.filter(p=>isHardHit(p.battedBall)).length;
+  const pull=bs.filter(p=>Math.abs(Number(p.battedBall.sprayAngleDeg)||0)>18).length;
+  const swingRate=sw.length/Math.max(1,data.pitches.length);
+  const whiff=data.pitches.filter(isWhiff).length/Math.max(1,sw.length);
+  const barRate=bar/Math.max(1,bs.length);
+  const pullRate=pull/Math.max(1,bs.length);
+
+  let primary=ev>=190||barRate>.2?"Power Bat":whiff<.15?"Contact Bat":swingRate>.65?"Aggressive Bat":"Balanced Bat";
+  let secondary=pullRate>.45?"Field-Side Hitter":barRate>.15?"Barrel Hunter":swingRate<.45?"Patient Hitter":hard/Math.max(1,bs.length)>.35?"Hard Contact":"Gap Hitter";
+
+  return {primary,secondary,ev,bar,barRate,hard,hardRate:hard/Math.max(1,bs.length),swingRate,whiff};
+}
+
+function renderArchetypeKpis(data){
+  const a=calcArchetype(data);
+  const items=[
+    ["Type",a.primary],
+    ["Sub Type",a.secondary],
+    ["HardHit%",pct(a.hard, batted(data).length)],
+    ["Swing%",pct(data.pitches.filter(isSwing).length,data.pitches.length)],
+    ["Whiff%",pct(data.pitches.filter(isWhiff).length,data.pitches.filter(isSwing).length)],
+    ["Barrel%",pct(a.bar,batted(data).length)]
+  ];
+
+  const el=document.getElementById("archetypeKpis");
+  if(!el)return;
+  el.innerHTML=items.map(([l,v])=>`<div class="kpi"><div class="label">${l}</div><div class="value" style="font-size:${String(v).length>12?'18px':'25px'}">${v}</div></div>`).join("");
+}
+
 function renderArchetype(data){const bs=batted(data),sw=data.pitches.filter(isSwing),ev=avg(bs.map(p=>Number(p.battedBall.exitSpeedKmh)).filter(Number.isFinite)),bar=bs.filter(p=>isBarrel(p.battedBall)).length,hard=bs.filter(p=>isHardHit(p.battedBall)).length,pull=bs.filter(p=>Math.abs(Number(p.battedBall.sprayAngleDeg)||0)>18).length;const swingRate=sw.length/Math.max(1,data.pitches.length),whiff=data.pitches.filter(isWhiff).length/Math.max(1,sw.length),barRate=bar/Math.max(1,bs.length),pullRate=pull/Math.max(1,bs.length);let primary=ev>=190||barRate>.2?'Power Bat':whiff<.15?'Contact Bat':swingRate>.65?'Aggressive Bat':'Balanced Bat';let secondary=pullRate>.45?'Field-Side Hitter':barRate>.15?'Barrel Hunter':swingRate<.45?'Patient Hitter':hard/Math.max(1,bs.length)>.35?'Hard Contact':'Gap Hitter';archetypeBox.innerHTML=`<div class="archBox"><div class="archTitle">PRIMARY</div><div class="archValue">${primary}</div></div><div class="archBox"><div class="archTitle">SECONDARY</div><div class="archValue">${secondary}</div></div><div class="archBox"><div class="archTitle">Avg EV</div><div class="archValue">${fmt(ev)}</div></div><div class="archBox"><div class="archTitle">Barrel%</div><div class="archValue">${pct(bar,bs.length)}</div></div>`}
 function renderBallTypeStats(data,id){const rows=groupStats(data,p=>p.ballName||p.ballType||'Unknown').sort((a,b)=>b.pitches-a.pitches).map(g=>`<tr><td>${esc(g.name)}</td><td>${g.pitches}</td><td>${g.balls}</td><td>${g.strikes}</td><td>${g.fouls}</td><td>${g.inplay}</td><td>${pct(g.swings,g.pitches)}</td><td>${pct(g.whiffs,g.swings)}</td><td>${fmt(g.evn?g.ev/g.evn:NaN)}</td><td>${g.hard}</td><td>${g.barrel}</td><td>${pct(g.barrel,g.batted)}</td></tr>`).join('');document.getElementById(id).innerHTML=`<thead><tr><th>球種</th><th>投球</th><th>BALL</th><th>STRIKE</th><th>FOUL</th><th>IN_PLAY</th><th>Swing%</th><th>Whiff%</th><th>Avg EV</th><th>HH</th><th>Barrel</th><th>Barrel%</th></tr></thead><tbody>${rows}</tbody>`}function renderTable(data){let pa=1,rows='';for(const p of data.pitches){const bb=p.battedBall,ct=bb?.contact;let cls=p.outcome==='IN_PLAY'?'result-inplay':p.outcome==='BALL'?'result-ball':p.outcome==='FOUL'?'result-foul':p.outcome==='STRIKE'?'result-strike':'';rows+=`<tr class="${cls}"><td>${pa}</td><td>#${p.pitchNo}${p.originalPitchNo?`<br><small>orig #${p.originalPitchNo}</small>`:''}</td><td>${esc(p.sourceSession||'')}</td><td>${esc(p.outcome)}</td><td>${esc(p.ballName||'')}</td><td>${p.zone?.label||'-'}<br>${p.zone?.code||zoneCode(p.zone?.displayRow,p.zone?.displayColumn)}</td><td>${fmt(p.speedKmh)} km/h</td><td>${bb?fmt(bb.exitSpeedKmh):'-'}</td><td>${bb?fmt(bb.launchAngleDeg):'-'}</td><td>${bb?fmt(bb.distance):'-'}</td><td>${bb?(isBarrel(bb)?`<span class="badge badgeBarrel">YES</span>`:isHardHit(bb)?`<span class="badge badgeHH">HH</span>`:''):'-'}</td><td>${ct?fmt(ct.offsetForward,3):'-'}</td><td>${ct?fmt(ct.normalizedDistance,3):'-'}</td></tr>`;if(p.plateAppearanceEnded){rows+=`<tr><td colspan="13" style="text-align:center;background:#eef2f7;color:#071d49;font-weight:800">End of PA ${pa}</td></tr>`;pa++}}pitchTable.innerHTML=`<thead><tr><th>PA</th><th>Pitch</th><th>Session</th><th>Result</th><th>Ball</th><th>Zone</th><th>球速</th><th>EV</th><th>LA</th><th>Dist</th><th>Barrel</th><th>Timing</th><th>ND</th></tr></thead><tbody>${rows}</tbody>`}
 function renderRank(data){const groups=groupStats(data,p=>p.sourcePlayer||'Unknown').filter(g=>g.pitches>=1),n=groups.length;let rows='';for(const g of groups){const metrics=[['Avg EV',x=>x.evn?x.ev/x.evn:0,true],['Barrel%',x=>x.batted?x.barrel/x.batted:0,true],['Whiff%',x=>x.swings?x.whiffs/x.swings:0,false]];const vals=metrics.map(([name,fn,high])=>{const sorted=[...groups].sort((a,b)=>high?fn(b)-fn(a):fn(a)-fn(b));const rank=sorted.findIndex(x=>x.name===g.name)+1;const tier=rank<=Math.ceil(n*.2)?'S':rank<=Math.ceil(n*.4)?'A':rank<=Math.ceil(n*.7)?'B':'C';return `${name}: ${rank}/${n} <span class="tier${tier}">${tier}</span>`}).join('<br>');rows+=`<tr><td>${esc(g.name)}</td><td>${g.pitches}</td><td>${fmt(g.evn?g.ev/g.evn:NaN)}</td><td>${pct(g.barrel,g.batted)}</td><td>${pct(g.whiffs,g.swings)}</td><td>${vals}</td></tr>`}if(document.getElementById('rankTable'))rankTable.innerHTML=`<thead><tr><th>Player</th><th>投球</th><th>Avg EV</th><th>Barrel%</th><th>Whiff%</th><th>Rank / Tier</th></tr></thead><tbody>${rows}</tbody>`}
-function renderOverall(data){if(!data)return;const total=data.pitches.length,bs=batted(data),players=new Set(data.pitches.map(p=>p.sourcePlayer||data.player?.name||'Unknown')),sw=data.pitches.filter(isSwing),bars=bs.filter(p=>isBarrel(p.battedBall));overallKpis.innerHTML=[['Players',players.size],['Pitches',total],['Batted',bs.length],['Swing%',pct(sw.length,total)],['Whiff%',pct(data.pitches.filter(isWhiff).length,sw.length)],['Barrel%',pct(bars.length,bs.length)]].map(([l,v])=>`<div class="kpi"><div class="label">${l}</div><div class="value">${v}</div></div>`).join('');renderRank(data);renderOverallBallTypes(data);renderOverallZones(data);renderOverallCombos(data)}function overallRows(groups){return groups.filter(g=>g.pitches>0).sort((a,b)=>difficulty(b)-difficulty(a)).map(g=>`<tr><td>${esc(g.name)}</td><td>${g.pitches}</td><td>${pct(g.swings,g.pitches)}</td><td>${pct(g.whiffs,g.swings)}</td><td>${pct(g.inplay,g.pitches)}</td><td>${fmt(g.evn?g.ev/g.evn:NaN)}</td><td>${pct(g.barrel,g.batted)}</td><td><strong>${difficulty(g)}</strong></td></tr>`).join('')}function renderOverallBallTypes(data){overallBallTypeTable.innerHTML=`<thead><tr><th>球種</th><th>投球</th><th>Swing%</th><th>Whiff%</th><th>InPlay%</th><th>Avg EV</th><th>Barrel%</th><th>難度</th></tr></thead><tbody>${overallRows(groupStats(data,p=>p.ballName||p.ballType||'Unknown'))}</tbody>`}function renderOverallZones(data){overallZoneTable.innerHTML=`<thead><tr><th>Zone</th><th>投球</th><th>Swing%</th><th>Whiff%</th><th>InPlay%</th><th>Avg EV</th><th>Barrel%</th><th>難度</th></tr></thead><tbody>${overallRows(groupStats(data,p=>p.zone?.code||zoneCode(p.zone?.displayRow,p.zone?.displayColumn)))}</tbody>`}function renderOverallCombos(data){overallComboTable.innerHTML=`<thead><tr><th>球種×コース</th><th>投球</th><th>Swing%</th><th>Whiff%</th><th>InPlay%</th><th>Avg EV</th><th>Barrel%</th><th>難度</th></tr></thead><tbody>${overallRows(groupStats(data,p=>`${p.ballName||p.ballType||'Unknown'} / ${p.zone?.code||zoneCode(p.zone?.displayRow,p.zone?.displayColumn)}`))}</tbody>`}
+function renderOverall(data){if(!data)return;const total=data.pitches.length,bs=batted(data),players=new Set(data.pitches.map(p=>p.sourcePlayer||data.player?.name||'Unknown')),sw=data.pitches.filter(isSwing),bars=bs.filter(p=>isBarrel(p.battedBall));overallKpis.innerHTML=[['Players',players.size],['Pitches',total],['Batted',bs.length],['Swing%',pct(sw.length,total)],['Whiff%',pct(data.pitches.filter(isWhiff).length,sw.length)],['Barrel%',pct(bars.length,bs.length)]].map(([l,v])=>`<div class="kpi"><div class="label">${l}</div><div class="value">${v}</div></div>`).join('');const rankCard=document.getElementById("overallRankCard");
+  if(rankCard) rankCard.classList.toggle("single-player-hidden", players.size<=1);
+  if(players.size>1) renderRank(data);
+  renderOverallBallTypes(data);renderOverallZones(data);renderOverallCombos(data)}function overallRows(groups){return groups.filter(g=>g.pitches>0).sort((a,b)=>difficulty(b)-difficulty(a)).map(g=>`<tr><td>${esc(g.name)}</td><td>${g.pitches}</td><td>${pct(g.swings,g.pitches)}</td><td>${pct(g.whiffs,g.swings)}</td><td>${pct(g.inplay,g.pitches)}</td><td>${fmt(g.evn?g.ev/g.evn:NaN)}</td><td>${pct(g.barrel,g.batted)}</td><td><strong>${difficulty(g)}</strong></td></tr>`).join('')}function renderOverallBallTypes(data){overallBallTypeTable.innerHTML=`<thead><tr><th>球種</th><th>投球</th><th>Swing%</th><th>Whiff%</th><th>InPlay%</th><th>Avg EV</th><th>Barrel%</th><th>難度</th></tr></thead><tbody>${overallRows(groupStats(data,p=>p.ballName||p.ballType||'Unknown'))}</tbody>`}function renderOverallZones(data){overallZoneTable.innerHTML=`<thead><tr><th>Zone</th><th>投球</th><th>Swing%</th><th>Whiff%</th><th>InPlay%</th><th>Avg EV</th><th>Barrel%</th><th>難度</th></tr></thead><tbody>${overallRows(groupStats(data,p=>p.zone?.code||zoneCode(p.zone?.displayRow,p.zone?.displayColumn)))}</tbody>`}function renderOverallCombos(data){overallComboTable.innerHTML=`<thead><tr><th>球種×コース</th><th>投球</th><th>Swing%</th><th>Whiff%</th><th>InPlay%</th><th>Avg EV</th><th>Barrel%</th><th>難度</th></tr></thead><tbody>${overallRows(groupStats(data,p=>`${p.ballName||p.ballType||'Unknown'} / ${p.zone?.code||zoneCode(p.zone?.displayRow,p.zone?.displayColumn)}`))}</tbody>`}
 function showError(msg){error.style.display='block';error.textContent=msg}function hideParamStatus(){
   const el=document.getElementById("paramStatus");
   if(el){
