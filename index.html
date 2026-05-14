@@ -475,6 +475,11 @@
 </section>
 <section id="overallView" class="view"><div class="toolbar"><strong>Overall Mode</strong><button class="secondary" onclick="showView('home')">戻る</button><button onclick="loadOverallFromManifest()">manifestから再読込</button><span class="note">players / sessions 全体を集計。detailsや分布系は省略。</span></div><div class="hero"><div><h1>Overall Statcast Summary</h1><p>プレイヤー全体で、難しい球種・コースを確認します。</p></div></div><div id="overallKpis" class="kpis"></div><div class="grid"><div class="card wide" id="overallRankCard"><h2>Player Rank / Tier</h2><div style="overflow:auto"><table id="rankTable"></table></div></div><div class="card"><h2>Overall Ball Type Difficulty / 球種別</h2><div style="overflow:auto"><table id="overallBallTypeTable"></table></div></div><div class="card"><h2>Overall Zone Difficulty / コース別</h2><div style="overflow:auto"><table id="overallZoneTable"></table></div></div><div class="card wide"><h2>Pitch Type × Zone Difficulty / 球種×コース</h2><div style="overflow:auto;max-height:560px"><table id="overallComboTable"></table></div></div></div></section></main>
 <script>
+window.DEFAULT_MANIFEST = './data/manifest.json';
+window.DEFAULT_LATEST = './data/latest.json';
+const DEFAULT_MANIFEST = window.DEFAULT_MANIFEST;
+const DEFAULT_LATEST = window.DEFAULT_LATEST;
+
 let currentData=null,baseData=null,playerDatas=[],currentZoneMetric='score',currentSprayMode='auto',currentContactMode='contact',currentSessionKey='ALL',currentManifestUrl=null;
 navHome.onclick=()=>showView('home');navPlayer.onclick=()=>showView('player');navOverall.onclick=()=>showView('overall');fileInput.addEventListener('change',handleFiles);playerSelect.addEventListener('change',()=>{const i=Number(playerSelect.value);if(playerDatas[i])loadPlayerDataObject(playerDatas[i].data,playerDatas[i].label)});document.addEventListener('DOMContentLoaded',autoLoadFromParams);
 function showView(view){for(const id of ['homeView','playerView','overallView'])document.getElementById(id).classList.toggle('active',id===view+'View');for(const id of ['navHome','navPlayer','navOverall'])document.getElementById(id).classList.remove('active');document.getElementById('nav'+view.charAt(0).toUpperCase()+view.slice(1)).classList.add('active');if(view==='overall'&&baseData)renderOverall(baseData)}
